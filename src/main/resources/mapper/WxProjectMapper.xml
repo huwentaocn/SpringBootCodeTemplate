@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.wx.manage.mapper.WxProjectMapper">
+
+    <!-- 通用查询映射结果 -->
+    <resultMap id="BaseResultMap" type="com.wx.manage.pojo.entity.WxProject">
+        <id column="id" property="id" />
+        <result column="name" property="name" />
+        <result column="contract_number" property="contractNumber" />
+        <result column="pf_id" property="pfId" />
+        <result column="outnet_ip" property="outnetIp" />
+        <result column="intranet_ip" property="intranetIp" />
+        <result column="domain_name" property="domainName" />
+        <result column="public_key" property="publicKey" />
+        <result column="private_key" property="privateKey" />
+        <result column="symmetric_key" property="symmetricKey" />
+        <result column="sort" property="sort" />
+        <result column="is_deleted" property="isDeleted" />
+        <result column="version" property="version" />
+        <result column="creator" property="creator" />
+        <result column="create_time" property="createTime" />
+        <result column="updater" property="updater" />
+        <result column="update_time" property="updateTime" />
+    </resultMap>
+
+    <!-- 通用查询结果列 -->
+    <sql id="Base_Column_List">
+        id, name, contract_number, pf_id, outnet_ip, intranet_ip, domain_name, public_key, private_key, symmetric_key, sort, is_deleted, version, creator, create_time, updater, update_time
+    </sql>
+
+</mapper>

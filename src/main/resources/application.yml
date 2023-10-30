@@ -1,0 +1,5 @@
+spring:
+  application:
+    name: wx-manage # 服务名
+  profiles:
+    active: dev # 环境设置

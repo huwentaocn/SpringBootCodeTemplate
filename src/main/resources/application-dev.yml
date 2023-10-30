@@ -1,0 +1,74 @@
+server:
+  port: 9000
+  servlet:
+    context-path: /manage
+  encoding:
+    charset: UTF-8
+    enabled: true
+    force: true
+
+
+spring:
+  datasource: # mysql数据库连接
+    type: com.zaxxer.hikari.HikariDataSource
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    url: jdbc:mysql://127.0.0.1:3306/wx_wechat?useUnicode=true&characterEncoding=UTF-8&useSSL=false&useTimezone=true&serverTimezone=GMT%2B8&allowPublicKeyRetrieval=true
+    username: #数据库用户名
+    password: #数据库密码
+
+  jackson:
+    date-format: yyyy-MM-dd HH:mm:ss #设置全局的日期格式为年月日时分秒
+    time-zone: GMT+8 #世界标准时间,为了方式时差,需要+8小时
+  servlet:
+    multipart:
+      max-file-size: 1024MB
+      max-request-size: 1024MB
+
+  #Redis配置
+  redis:
+    host: 127.0.0.1
+    port: 6379
+    database: 0 #使用7号库
+    password:  #默认为空
+    timeout: 3000ms #最大等待时间，超时则抛出异常，否则请求一直等待
+    lettuce:
+      pool:
+        max-active: 20  #最大连接数，负值表示没有限制，默认8
+        max-wait: -1    #最大阻塞等待时间，负值表示没限制，默认-1
+        max-idle: 8     #最大空闲连接，默认8
+        min-idle: 0     #最小空闲连接，默认0
+
+mybatis-plus:
+  configuration:
+    log-impl: org.apache.ibatis.logging.stdout.StdOutImpl # 查看日志
+
+
+
+###设置日志级别
+#logging:
+#  level:
+#    root: error
+
+#阿里云配置
+aliyun:
+  sms: #短信配置
+    region-id: cn-beijing
+    key-id: #阿里keyId
+    key-secret: #阿里secret
+    sign-name: #签名名称
+    template-code-1: SMS_205439915 #一分钟有效短信模板
+    template-code-2: SMS_162630265 #两分钟有效短信模板
+    template-code-5: SMS_256970971 #五分钟有效短信模板
+  oss: #oss配置
+    endpoint: oss-cn-beijing.aliyuncs.com
+    keyId: #阿里keyId
+    keySecret: #阿里secret
+    bucketName: wxmanage
+    urlPrefix: https://${aliyun.oss.bucketName}.${aliyun.oss.endpoint}
+
+#微信配置
+wechat:
+  app:
+    configs:
+      - appid:  #微信小程序的appid
+        secret:  #微信小程序的Secret
