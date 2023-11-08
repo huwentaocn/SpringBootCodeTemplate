@@ -82,6 +82,11 @@ public enum ResultCodeEnum {
 
     WENXIANG_CALL_FAIL(-10003, "文香私有化平台调用失败"),
 
+
+    // ========== AUTH 模块 1002000000 ==========
+    AUTH_LOGIN_BAD_CREDENTIALS_ERROR(1002000000, "登录失败，账号密码不正确"),
+    AUTH_LOGIN_USER_DISABLED_ERROR(1002000001, "登录失败，账号被禁用"),
+
     ;
 
     private Integer code;

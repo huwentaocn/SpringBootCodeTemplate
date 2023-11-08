@@ -73,7 +73,7 @@ public class CodeGeneratorNew {
                 .strategyConfig(builder -> {
                     builder
                             //entity配置策略
-                            .addInclude("wx_project")
+//                            .addInclude("wx_project")
                             .entityBuilder()
                             .enableLombok()
                             .idType(IdType.ASSIGN_ID) //id策略，雪花算法

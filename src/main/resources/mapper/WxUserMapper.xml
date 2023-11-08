@@ -13,7 +13,7 @@
         <result column="age" property="age" />
         <result column="head_url" property="headUrl" />
         <result column="sort" property="sort" />
-        <result column="user_type" property="userType" />
+        <result column="user_type" property="userTypeEnum" />
         <result column="is_deleted" property="isDeleted" />
         <result column="creator" property="creator" />
         <result column="create_time" property="createTime" />

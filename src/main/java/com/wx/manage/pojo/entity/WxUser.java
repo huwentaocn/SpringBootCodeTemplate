@@ -1,7 +1,7 @@
 package com.wx.manage.pojo.entity;
 
 import com.baomidou.mybatisplus.annotation.*;
-import com.wx.manage.constant.UserType;
+import com.wx.manage.constant.UserTypeEnum;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.Getter;
@@ -64,7 +64,7 @@ public class WxUser implements Serializable {
 
     @ApiModelProperty("用户类型：1管理员，2普通用户，默认2")
     @TableField("user_type")
-    private UserType userType;
+    private UserTypeEnum userTypeEnum;
 
     @ApiModelProperty("逻辑删除：0未删除，1删除，默认0")
     @TableField("is_deleted")

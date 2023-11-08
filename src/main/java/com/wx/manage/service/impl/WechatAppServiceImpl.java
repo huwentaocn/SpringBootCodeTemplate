@@ -8,7 +8,7 @@ import cn.binarywang.wx.miniapp.util.WxMaConfigHolder;
 import com.alibaba.fastjson.JSONObject;
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.wx.manage.constant.RedisConstant;
-import com.wx.manage.constant.UserType;
+import com.wx.manage.constant.UserTypeEnum;
 import com.wx.manage.pojo.entity.WxUser;
 import com.wx.manage.pojo.req.GetWechatUserInfoReq;
 import com.wx.manage.pojo.req.GetWechatUserPhoneReq;
@@ -78,7 +78,7 @@ public class WechatAppServiceImpl implements WechatAppService {
                 user.setOpenId(openid);
                 user.setUserName(openid);
                 user.setNickName(openid);
-                user.setUserType(UserType.USER);
+                user.setUserTypeEnum(UserTypeEnum.USER);
                 userService.saveOrUpdate(user);
             }
 

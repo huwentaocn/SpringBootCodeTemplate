@@ -13,15 +13,15 @@ import lombok.Getter;
  */
 @JSONType(serializer = EnumSerializer.class, deserializer = EnumDeserializer.class, serializeEnumAsJavaBean = true)
 @Getter
-public enum UserType {
+public enum UserTypeEnum {
     ADMIN(1,"管理员"),
     USER(2,"普通用户" );
 
     @EnumValue
-    private Integer code ;
-    private String comment ;
+    private final Integer code ;
+    private final String comment ;
 
-    UserType(Integer code, String comment ){
+    UserTypeEnum(Integer code, String comment ){
         this.code=code;
         this.comment=comment;
     }

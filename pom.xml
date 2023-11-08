@@ -28,6 +28,9 @@
         <httpclient.version>4.5.1</httpclient.version>
         <commons-io.version>1.3.2</commons-io.version>
         <weixin-java-miniapp.version>4.5.0</weixin-java-miniapp.version>
+        <hutool-all.version>5.8.22</hutool-all.version>
+        <!-- 监控相关 -->
+        <skywalking.version>8.12.0</skywalking.version>
     </properties>
 
     <dependencies>
@@ -153,6 +156,33 @@
             <version>${httpclient.version}</version>
         </dependency>
 
+        <!--链路追踪-->
+        <dependency>
+            <groupId>org.apache.skywalking</groupId>
+            <artifactId>apm-toolkit-trace</artifactId>
+            <version>${skywalking.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>org.apache.skywalking</groupId>
+            <artifactId>apm-toolkit-logback-1.x</artifactId>
+            <version>${skywalking.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>org.apache.skywalking</groupId>
+            <artifactId>apm-toolkit-opentracing</artifactId>
+            <version>${skywalking.version}</version>
+            <!--                <exclusions>-->
+            <!--                    <exclusion>-->
+            <!--                        <artifactId>opentracing-api</artifactId>-->
+            <!--                        <groupId>io.opentracing</groupId>-->
+            <!--                    </exclusion>-->
+            <!--                    <exclusion>-->
+            <!--                        <artifactId>opentracing-util</artifactId>-->
+            <!--                        <groupId>io.opentracing</groupId>-->
+            <!--                    </exclusion>-->
+            <!--                </exclusions>-->
+        </dependency>
+
         <dependency>
             <groupId>org.apache.commons</groupId>
             <artifactId>commons-io</artifactId>
@@ -169,6 +199,11 @@
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-configuration-processor</artifactId>
             <optional>true</optional>
+        </dependency>
+        <dependency>
+            <groupId>cn.hutool</groupId>
+            <artifactId>hutool-all</artifactId>
+            <version>${hutool-all.version}</version>
         </dependency>
 
     </dependencies>
