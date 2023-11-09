@@ -10,11 +10,27 @@ server:
 
 spring:
   datasource: # mysql数据库连接
-    type: com.zaxxer.hikari.HikariDataSource
-    driver-class-name: com.mysql.cj.jdbc.Driver
-    url: jdbc:mysql://127.0.0.1:3306/scct-master?useUnicode=true&characterEncoding=UTF-8&useSSL=false&useTimezone=true&serverTimezone=GMT%2B8&allowPublicKeyRetrieval=true
-    username: root #数据库用户名
-    password: 123456 #数据库密码
+    dynamic: # 多数据源配置
+      druid: # Druid 【连接池】相关的全局配置
+        initial-size: 5 # 初始连接数
+        min-idle: 10 # 最小连接池数量
+        max-active: 20 # 最大连接池数量
+        max-wait: 600000 # 配置获取连接等待超时的时间，单位：毫秒
+        time-between-eviction-runs-millis: 60000 # 配置间隔多久才进行一次检测，检测需要关闭的空闲连接，单位：毫秒
+        min-evictable-idle-time-millis: 300000 # 配置一个连接在池中最小生存的时间，单位：毫秒
+        max-evictable-idle-time-millis: 900000 # 配置一个连接在池中最大生存的时间，单位：毫秒
+        validation-query: SELECT 1 FROM DUAL # 配置检测连接是否有效
+        test-while-idle: true
+        test-on-borrow: false
+        test-on-return: false
+      primary: master
+      datasource: # mysql数据库连接
+        master:
+          type: com.zaxxer.hikari.HikariDataSource
+          driver-class-name: com.mysql.cj.jdbc.Driver
+          url: jdbc:mysql://127.0.0.1:3306/scct-master?useUnicode=true&characterEncoding=UTF-8&useSSL=false&useTimezone=true&serverTimezone=GMT%2B8&allowPublicKeyRetrieval=true
+          username: root #数据库用户名
+          password: 123456 #数据库密码
 
   jackson:
     date-format: yyyy-MM-dd HH:mm:ss #设置全局的日期格式为年月日时分秒
@@ -41,6 +57,9 @@ spring:
 mybatis-plus:
   configuration:
     log-impl: org.apache.ibatis.logging.stdout.StdOutImpl # 查看日志
+  encryptor:
+    password: XDV71a+xqStEA3WH # 加解密的秘钥，可使用 https://www.imaegoo.com/2020/aes-key-generator/ 网站生成
+
 
 
 
@@ -72,3 +91,22 @@ wechat:
     configs:
       - appid:  #微信小程序的appid
         secret:  #微信小程序的Secret
+
+tenant: # 多租户相关配置项
+  enable: true
+  ignore-urls:
+    - /admin-api/system/tenant/get-id-by-name # 基于名字获取租户，不许带租户编号
+    - /admin-api/system/captcha/get # 获取图片验证码，和租户无关
+    - /admin-api/system/captcha/check # 校验图片验证码，和租户无关
+    - /admin-api/infra/file/*/get/** # 获取图片，和租户无关
+    - /admin-api/system/sms/callback/* # 短信回调接口，无法带上租户编号
+    - /admin-api/pay/notify/callback/* # 支付回调通知，不携带租户编号
+    - /jmreport/* # 积木报表，无法携带租户编号
+    - /admin-api/mp/open/** # 微信公众号开放平台，微信回调接口，无法携带租户编号
+  ignore-tables:
+    - system_tenant
+    - system_tenant_package
+    - system_menu
+    - infra_data_source_config
+  ignore-caches:
+    - permission_menu_ids

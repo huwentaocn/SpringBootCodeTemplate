@@ -16,6 +16,10 @@
 
     <properties>
         <java.version>1.8</java.version>
+
+        <!-- DB 相关 -->
+        <druid.version>1.2.16</druid.version>
+        <dynamic-datasource.version>3.6.1</dynamic-datasource.version>
         <mybatis-plus.version>3.5.3.1</mybatis-plus.version>
         <velocity.version>2.3</velocity.version>
         <mysql.version>8.0.30</mysql.version>
@@ -31,6 +35,8 @@
         <hutool-all.version>5.8.22</hutool-all.version>
         <!-- 监控相关 -->
         <skywalking.version>8.12.0</skywalking.version>
+        <!--阿里线程工具类-->
+        <transmittable-thread-local.version>2.14.2</transmittable-thread-local.version>
     </properties>
 
     <dependencies>
@@ -69,6 +75,12 @@
             <scope>test</scope>
         </dependency>
 
+        <!--DB相关-->
+        <dependency>
+            <groupId>com.alibaba</groupId>
+            <artifactId>druid-spring-boot-starter</artifactId>
+            <version>${druid.version}</version>
+        </dependency>
         <!--mybatis-plus-->
         <dependency>
             <groupId>com.baomidou</groupId>
@@ -86,6 +98,11 @@
             <groupId>org.apache.velocity</groupId>
             <artifactId>velocity-engine-core</artifactId>
             <version>${velocity.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>com.baomidou</groupId>
+            <artifactId>dynamic-datasource-spring-boot-starter</artifactId> <!-- 多数据源 -->
+            <version>${dynamic-datasource.version}</version>
         </dependency>
 
         <!--mysql-->
@@ -204,6 +221,13 @@
             <groupId>cn.hutool</groupId>
             <artifactId>hutool-all</artifactId>
             <version>${hutool-all.version}</version>
+        </dependency>
+
+        <!--阿里线程工具类-->
+        <dependency>
+            <groupId>com.alibaba</groupId>
+            <artifactId>transmittable-thread-local</artifactId> <!-- 解决 ThreadLocal 父子线程的传值问题 -->
+            <version>${transmittable-thread-local.version}</version>
         </dependency>
 
     </dependencies>

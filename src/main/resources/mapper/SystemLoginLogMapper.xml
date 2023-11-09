@@ -8,7 +8,7 @@
         <result column="log_type" property="logType" />
         <result column="trace_id" property="traceId" />
         <result column="user_id" property="userId" />
-        <result column="user_type" property="userTypeEnum" />
+        <result column="user_type" property="userType" />
         <result column="username" property="username" />
         <result column="result" property="result" />
         <result column="user_ip" property="userIp" />

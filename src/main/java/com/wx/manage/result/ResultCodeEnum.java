@@ -1,5 +1,6 @@
 package com.wx.manage.result;
 
+import com.alibaba.druid.wall.violation.ErrorCode;
 import lombok.Getter;
 
 /**
@@ -86,6 +87,12 @@ public enum ResultCodeEnum {
     // ========== AUTH 模块 1002000000 ==========
     AUTH_LOGIN_BAD_CREDENTIALS_ERROR(1002000000, "登录失败，账号密码不正确"),
     AUTH_LOGIN_USER_DISABLED_ERROR(1002000001, "登录失败，账号被禁用"),
+
+
+    // ========== 数据源配置 1001007000 ==========
+    DATA_SOURCE_CONFIG_NOT_EXISTS(1001007000, "数据源配置不存在"),
+    DATA_SOURCE_CONFIG_NOT_OK(1001007001, "数据源配置不正确，无法进行连接"),
+
 
     ;
 

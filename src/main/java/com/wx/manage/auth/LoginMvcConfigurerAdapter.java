@@ -38,15 +38,15 @@ public class LoginMvcConfigurerAdapter implements WebMvcConfigurer {
         add("/**/login/**");
     }};
 
-    @Override
-    public void addInterceptors(InterceptorRegistry registry) {
-
-//        String[] excludePatterns = new String[]{"/swagger-resources/**", "/webjars/**", "/v2/**", "/swagger-ui.html/**",
-//                "/api", "/api-docs", "/api-docs/**", "/doc.html/**"};
-
-        registry.addInterceptor(new UserLoginInterceptor(redisTemplate))
-                .addPathPatterns("/**")
-                .excludePathPatterns(passPathList.toArray(new String[0]))
-        ;
-    }
+//    @Override
+//    public void addInterceptors(InterceptorRegistry registry) {
+//
+////        String[] excludePatterns = new String[]{"/swagger-resources/**", "/webjars/**", "/v2/**", "/swagger-ui.html/**",
+////                "/api", "/api-docs", "/api-docs/**", "/doc.html/**"};
+//
+//        registry.addInterceptor(new UserLoginInterceptor(redisTemplate))
+//                .addPathPatterns("/**")
+//                .excludePathPatterns(passPathList.toArray(new String[0]))
+//        ;
+//    }
 }

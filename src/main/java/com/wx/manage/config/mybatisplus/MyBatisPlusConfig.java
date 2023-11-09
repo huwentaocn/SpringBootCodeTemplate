@@ -26,20 +26,6 @@ public class MyBatisPlusConfig {
 
         MybatisPlusInterceptor interceptor = new MybatisPlusInterceptor();
 
-        //添加多租户配置
-        interceptor.addInnerInterceptor(new TenantLineInnerInterceptor(new TenantLineHandler() {
-            @Override
-            public Expression getTenantId() {
-                return new LongValue(0);
-            }
-
-            // 这是 default 方法,默认返回 false 表示所有表都需要拼多租户条件
-//            @Override
-//            public boolean ignoreTable(String tableName) {
-//                return !"sys_user".equalsIgnoreCase(tableName);
-//            }
-        }));
-
         //添加分页插件
         interceptor.addInnerInterceptor(new PaginationInnerInterceptor(DbType.MYSQL));
         //添加乐观锁插件
