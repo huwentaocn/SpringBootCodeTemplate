@@ -28,6 +28,11 @@ public class SystemTenant implements Serializable {
 
     private static final long serialVersionUID = 1L;
 
+    /**
+     * 套餐编号 - 系统
+     */
+    public static final Long PACKAGE_ID_SYSTEM = 0L;
+
     @ApiModelProperty("租户编号")
     @TableId(value = "id", type = IdType.AUTO)
     private Long id;

@@ -1,4 +1,4 @@
-package com.wx.manage.config.mybatisplus;
+package com.wx.manage.handler.type;
 
 import cn.hutool.core.lang.Assert;
 import cn.hutool.crypto.SecureUtil;
@@ -14,7 +14,9 @@ import java.sql.SQLException;
 
 /**
  * @Description
- * @Date 2023/11/9 10:56 星期四
+ * 字段字段的 TypeHandler 实现类，基于 {@link AES} 实现
+ * 可通过 jasypt.encryptor.password 配置项，设置密钥
+ * @Date 2023/4/20 17:02 星期四
  * @Author Hu Wentao
  */
 public class EncryptTypeHandler extends BaseTypeHandler<String> {

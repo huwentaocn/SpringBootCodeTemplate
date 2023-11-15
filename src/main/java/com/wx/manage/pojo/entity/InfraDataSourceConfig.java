@@ -8,14 +8,11 @@ import com.baomidou.mybatisplus.annotation.TableName;
 import java.io.Serializable;
 import java.time.LocalDateTime;
 
-import com.wx.manage.config.mybatisplus.EncryptTypeHandler;
+import com.wx.manage.handler.type.EncryptTypeHandler;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
-import lombok.Getter;
-import lombok.Setter;
 import lombok.experimental.Accessors;
-import org.checkerframework.checker.units.qual.A;
 
 /**
  * <p>

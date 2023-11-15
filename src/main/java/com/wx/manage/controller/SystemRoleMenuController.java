@@ -1,5 +1,7 @@
 package com.wx.manage.controller;
 
+import com.wx.manage.service.SystemRoleMenuService;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -14,5 +16,10 @@ import org.springframework.web.bind.annotation.RestController;
 @RestController
 @RequestMapping("/systemRoleMenu")
 public class SystemRoleMenuController {
+
+    @Autowired
+    private SystemRoleMenuService roleMenuService;
+
+
 
 }

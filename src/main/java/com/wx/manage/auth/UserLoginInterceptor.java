@@ -1,7 +1,9 @@
 package com.wx.manage.auth;
 
+import cn.hutool.core.util.StrUtil;
+import com.wx.manage.config.tenant.TenantContextHolder;
 import com.wx.manage.constant.RedisConstant;
-import com.wx.manage.constant.TokenConstant;
+import com.wx.manage.constant.HeaderConstant;
 import com.wx.manage.exception.GlobalException;
 import com.wx.manage.pojo.vo.UserInfoVo;
 import com.wx.manage.result.ResultCodeEnum;
@@ -31,13 +33,18 @@ public class UserLoginInterceptor implements HandlerInterceptor {
     public boolean preHandle(HttpServletRequest request,
                              HttpServletResponse response,
                              Object handler) throws Exception {
-        //获取用户信息
-        UserInfoVo userInfo = this.getUserInfo(request);
-
-        //拿不到用户信息，返回
-        if (userInfo == null) {
-            throw new GlobalException(ResultCodeEnum.LOGIN_AUTH);
+        //设置租户id
+        String tenantId = request.getHeader(HeaderConstant.HEADER_TENANT_ID);
+        if (StringUtils.isNotBlank(tenantId)) {
+            TenantContextHolder.setTenantId(Long.valueOf(tenantId));
         }
+        //获取用户信息
+//        UserInfoVo userInfo = this.getUserInfo(request);
+
+//        //拿不到用户信息，返回
+//        if (userInfo == null) {
+//            throw new GlobalException(ResultCodeEnum.LOGIN_AUTH);
+//        }
 
         return true;
     }
@@ -50,7 +57,7 @@ public class UserLoginInterceptor implements HandlerInterceptor {
 
     private UserInfoVo getUserInfo(HttpServletRequest request) {
         //从请求头获取token
-        String token = request.getHeader(TokenConstant.AUTHORIZATION);
+        String token = request.getHeader(HeaderConstant.AUTHORIZATION);
 
         UserInfoVo userInfoVo = null;
         //判断token不为空

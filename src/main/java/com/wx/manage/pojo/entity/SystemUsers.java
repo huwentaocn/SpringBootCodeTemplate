@@ -7,6 +7,8 @@ import com.baomidou.mybatisplus.annotation.TableId;
 import com.baomidou.mybatisplus.annotation.TableName;
 import java.io.Serializable;
 import java.time.LocalDateTime;
+
+import com.wx.manage.handler.type.EncryptTypeHandler;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.Getter;
@@ -37,7 +39,7 @@ public class SystemUsers implements Serializable {
     private String username;
 
     @ApiModelProperty("密码")
-    @TableField("password")
+    @TableField(value = "password", typeHandler = EncryptTypeHandler.class)
     private String password;
 
     @ApiModelProperty("用户昵称")

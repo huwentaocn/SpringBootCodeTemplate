@@ -8,7 +8,7 @@
         <result column="name" property="name" />
         <result column="status" property="status" />
         <result column="remark" property="remark" />
-        <result column="menu_ids" property="menuIds" />
+        <result column="menu_ids" property="menuIds" typeHandler="com.wx.manage.handler.type.JsonLongSetTypeHandler"/>
         <result column="creator" property="creator" />
         <result column="create_time" property="createTime" />
         <result column="updater" property="updater" />

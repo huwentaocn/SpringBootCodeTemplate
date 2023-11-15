@@ -9,10 +9,7 @@ import io.swagger.annotations.ApiOperation;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.validation.annotation.Validated;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.security.PermitAll;
 import javax.validation.Valid;
@@ -23,18 +20,16 @@ import javax.validation.Valid;
  * @Author Hu Wentao
  */
 
-@Api(tags = "管理后台-认证")
 @RestController
+@CrossOrigin
+@Api(tags = "管理后台-认证")
 @RequestMapping("/system/auth")
-@Validated
-@Slf4j
 public class AuthController {
 
     @Autowired
     private AuthService authService;
 
     @PostMapping("/login")
-    @PermitAll
     @ApiOperation(value= "使用账号密码登录", notes = "使用账号密码登录")
     public Result<AuthLoginResp> login(@RequestBody @Valid AuthLoginReq req) {
         return Result.success(authService.login(req));

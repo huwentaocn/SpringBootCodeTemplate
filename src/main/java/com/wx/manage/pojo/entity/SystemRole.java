@@ -7,6 +7,9 @@ import com.baomidou.mybatisplus.annotation.TableId;
 import com.baomidou.mybatisplus.annotation.TableName;
 import java.io.Serializable;
 import java.time.LocalDateTime;
+import java.util.Set;
+
+import com.wx.manage.handler.type.JsonLongSetTypeHandler;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.Getter;
@@ -22,7 +25,7 @@ import lombok.Setter;
  */
 @Getter
 @Setter
-@TableName("system_role")
+@TableName(value = "system_role", autoResultMap = true)
 @ApiModel(value = "SystemRole对象", description = "角色信息表")
 public class SystemRole implements Serializable {
 
@@ -49,8 +52,8 @@ public class SystemRole implements Serializable {
     private Integer dataScope;
 
     @ApiModelProperty("数据范围(指定部门数组)")
-    @TableField("data_scope_dept_ids")
-    private String dataScopeDeptIds;
+    @TableField(value = "data_scope_dept_ids", typeHandler = JsonLongSetTypeHandler.class)
+    private Set<Long> dataScopeDeptIds;
 
     @ApiModelProperty("角色状态（0正常 1停用）")
     @TableField("status")

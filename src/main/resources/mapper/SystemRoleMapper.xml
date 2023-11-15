@@ -9,7 +9,7 @@
         <result column="code" property="code" />
         <result column="sort" property="sort" />
         <result column="data_scope" property="dataScope" />
-        <result column="data_scope_dept_ids" property="dataScopeDeptIds" />
+        <result column="data_scope_dept_ids" property="dataScopeDeptIds"  typeHandler="com.wx.manage.handler.type.JsonLongSetTypeHandler"/>
         <result column="status" property="status" />
         <result column="type" property="type" />
         <result column="remark" property="remark" />

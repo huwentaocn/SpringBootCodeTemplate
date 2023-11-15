@@ -29,6 +29,14 @@ public class RedisConstant {
      */
     private static final String USER_INFO_KEY = "user:info:{0}";
 
+    /**
+     * 拥有指定菜单的角色编号的缓存
+     *
+     * KEY 格式：user_role_ids:{menuId}
+     * VALUE 数据类型：String 角色编号集合
+     */
+    String MENU_ROLE_ID_LIST = "menu_role_ids";
+
 
     /**
      * 获取短信验证码key

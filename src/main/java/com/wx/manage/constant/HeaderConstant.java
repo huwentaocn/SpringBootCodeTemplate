@@ -10,8 +10,14 @@ import lombok.Data;
  */
 
 @Data
-@ApiModel(value = "TokenConstant", description = "token常量")
-public class TokenConstant {
+@ApiModel(value = "HeaderConstant", description = "请求头常量")
+public class HeaderConstant {
 
     public static final String AUTHORIZATION = "Authorization";
+
+
+    /**
+     * 租户id
+     */
+    public static final String HEADER_TENANT_ID = "tenant-id";
 }

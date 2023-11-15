@@ -7,6 +7,9 @@ import com.baomidou.mybatisplus.annotation.TableId;
 import com.baomidou.mybatisplus.annotation.TableName;
 import java.io.Serializable;
 import java.time.LocalDateTime;
+import java.util.Set;
+
+import com.wx.manage.handler.type.JsonLongSetTypeHandler;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.Getter;
@@ -22,7 +25,7 @@ import lombok.Setter;
  */
 @Getter
 @Setter
-@TableName("system_tenant_package")
+@TableName(value = "system_tenant_package", autoResultMap = true)
 @ApiModel(value = "SystemTenantPackage对象", description = "租户套餐表")
 public class SystemTenantPackage implements Serializable {
 
@@ -45,8 +48,8 @@ public class SystemTenantPackage implements Serializable {
     private String remark;
 
     @ApiModelProperty("关联的菜单编号")
-    @TableField("menu_ids")
-    private String menuIds;
+    @TableField(value = "menu_ids", typeHandler = JsonLongSetTypeHandler.class)
+    private Set<Long> menuIds;
 
     @ApiModelProperty("创建者")
     @TableField(value = "creator", fill = FieldFill.INSERT)

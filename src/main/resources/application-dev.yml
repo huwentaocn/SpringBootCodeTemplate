@@ -35,6 +35,11 @@ spring:
   jackson:
     date-format: yyyy-MM-dd HH:mm:ss #设置全局的日期格式为年月日时分秒
     time-zone: GMT+8 #世界标准时间,为了方式时差,需要+8小时
+#    serialization:
+#      write-dates-as-timestamps: true # 设置 Date 的格式，使用时间戳
+#      write-date-timestamps-as-nanoseconds: false # 设置不使用 nanoseconds 的格式。例如说 1611460870.401，而是直接 1611460870401
+#      write-durations-as-timestamps: true # 设置 Duration 的格式，使用时间戳
+#      fail-on-empty-beans: false # 允许序列化无属性的 Bean
   servlet:
     multipart:
       max-file-size: 1024MB
@@ -92,21 +97,22 @@ wechat:
       - appid:  #微信小程序的appid
         secret:  #微信小程序的Secret
 
-tenant: # 多租户相关配置项
-  enable: true
-  ignore-urls:
-    - /admin-api/system/tenant/get-id-by-name # 基于名字获取租户，不许带租户编号
-    - /admin-api/system/captcha/get # 获取图片验证码，和租户无关
-    - /admin-api/system/captcha/check # 校验图片验证码，和租户无关
-    - /admin-api/infra/file/*/get/** # 获取图片，和租户无关
-    - /admin-api/system/sms/callback/* # 短信回调接口，无法带上租户编号
-    - /admin-api/pay/notify/callback/* # 支付回调通知，不携带租户编号
-    - /jmreport/* # 积木报表，无法携带租户编号
-    - /admin-api/mp/open/** # 微信公众号开放平台，微信回调接口，无法携带租户编号
-  ignore-tables:
-    - system_tenant
-    - system_tenant_package
-    - system_menu
-    - infra_data_source_config
-  ignore-caches:
-    - permission_menu_ids
+scct:
+  tenant: # 多租户相关配置项
+    enable: true
+    ignore-urls:
+      - /admin-api/system/tenant/get-id-by-name # 基于名字获取租户，不许带租户编号
+      - /admin-api/system/captcha/get # 获取图片验证码，和租户无关
+      - /admin-api/system/captcha/check # 校验图片验证码，和租户无关
+      - /admin-api/infra/file/*/get/** # 获取图片，和租户无关
+      - /admin-api/system/sms/callback/* # 短信回调接口，无法带上租户编号
+      - /admin-api/pay/notify/callback/* # 支付回调通知，不携带租户编号
+      - /jmreport/* # 积木报表，无法携带租户编号
+      - /admin-api/mp/open/** # 微信公众号开放平台，微信回调接口，无法携带租户编号
+    ignore-tables:
+      - system_tenant
+      - system_tenant_package
+      - system_menu
+      - infra_data_source_config
+    ignore-caches:
+      - permission_menu_ids
