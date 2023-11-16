@@ -3,10 +3,6 @@ package com.wx.manage.service.impl;
 import cn.hutool.core.util.StrUtil;
 import com.baomidou.dynamic.datasource.annotation.DSTransactional;
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
-import com.baomidou.mybatisplus.core.conditions.update.LambdaUpdateWrapper;
-import com.baomidou.mybatisplus.core.conditions.update.UpdateWrapper;
-import com.google.common.annotations.VisibleForTesting;
-import com.wx.manage.config.dynamic.TenantDS;
 import com.wx.manage.constant.EnableStatusEnum;
 import com.wx.manage.exception.GlobalException;
 import com.wx.manage.pojo.entity.SystemUsers;
@@ -79,6 +75,7 @@ public class SystemUsersServiceImpl extends ServiceImpl<SystemUsersMapper, Syste
         SystemUsers user = new SystemUsers();
         BeanUtils.copyProperties(createReq, user);
         user.setStatus(EnableStatusEnum.ENABLE.getStatus());
+        saveOrUpdate(user);
 
         return user.getId();
     }

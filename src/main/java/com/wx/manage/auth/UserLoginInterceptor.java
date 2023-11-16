@@ -1,12 +1,9 @@
 package com.wx.manage.auth;
 
-import cn.hutool.core.util.StrUtil;
-import com.wx.manage.config.tenant.TenantContextHolder;
+import com.wx.manage.tenant.TenantContextHolder;
 import com.wx.manage.constant.RedisConstant;
 import com.wx.manage.constant.HeaderConstant;
-import com.wx.manage.exception.GlobalException;
 import com.wx.manage.pojo.vo.UserInfoVo;
-import com.wx.manage.result.ResultCodeEnum;
 import com.wx.manage.until.JwtUtil;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.data.redis.core.RedisTemplate;

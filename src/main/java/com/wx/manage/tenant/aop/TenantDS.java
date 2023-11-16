@@ -1,4 +1,4 @@
-package com.wx.manage.config.dynamic;
+package com.wx.manage.tenant.aop;
 
 import com.baomidou.dynamic.datasource.annotation.DS;
 

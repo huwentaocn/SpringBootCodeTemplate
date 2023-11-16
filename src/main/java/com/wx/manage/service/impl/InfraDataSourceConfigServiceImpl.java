@@ -172,7 +172,7 @@ public class InfraDataSourceConfigServiceImpl extends ServiceImpl<InfraDataSourc
      */
     private void validateConnectionOK(InfraDataSourceConfig config) {
         if (config == null) {
-            throw new GlobalException(ResultCodeEnum.DATA_NOT_EXIST_FAIL);
+            throw new GlobalException(ResultCodeEnum.DATA_SOURCE_CONFIG_NOT_EXISTS);
         }
         boolean success = JdbcUtils.isConnectionOK(config.getUrl(), config.getUsername(), config.getPassword());
         if (!success) {

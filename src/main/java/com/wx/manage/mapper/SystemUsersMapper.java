@@ -1,6 +1,6 @@
 package com.wx.manage.mapper;
 
-import com.wx.manage.config.dynamic.TenantDS;
+import com.wx.manage.tenant.aop.TenantDS;
 import com.wx.manage.pojo.entity.SystemUsers;
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 import org.apache.ibatis.annotations.Mapper;

@@ -1,4 +1,4 @@
-package com.wx.manage.aop;
+package com.wx.manage.tenant.aop;
 
 import java.lang.annotation.*;
 

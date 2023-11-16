@@ -7,10 +7,8 @@ import com.baomidou.dynamic.datasource.annotation.DSTransactional;
 import com.baomidou.dynamic.datasource.spring.boot.autoconfigure.DataSourceProperty;
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
-import com.google.common.cache.CacheLoader;
-import com.google.common.cache.LoadingCache;
-import com.wx.manage.config.tenant.TenantContextHolder;
-import com.wx.manage.config.tenant.TenantProperties;
+import com.wx.manage.tenant.TenantContextHolder;
+import com.wx.manage.tenant.TenantProperties;
 import com.wx.manage.constant.EnableStatusEnum;
 import com.wx.manage.constant.RoleCodeEnum;
 import com.wx.manage.constant.RoleTypeEnum;
@@ -38,7 +36,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Lazy;
 import org.springframework.stereotype.Service;
 
-import java.time.Duration;
 import java.util.List;
 import java.util.Objects;
 import java.util.Set;
@@ -120,6 +117,9 @@ public class SystemTenantServiceImpl extends ServiceImpl<SystemTenantMapper, Sys
     public Long createTenant(TenantCreateReq createReq) {
         // 校验套餐被禁用
         SystemTenantPackage tenantPackage = tenantPackageService.validTenantPackage(createReq.getPackageId());
+
+        //校验数据源是否正确
+        dataSourceConfigService.testDataSourceConfig(createReq.getDataSourceConfigId());
 
         //创建租户
         SystemTenant tenant = new SystemTenant();

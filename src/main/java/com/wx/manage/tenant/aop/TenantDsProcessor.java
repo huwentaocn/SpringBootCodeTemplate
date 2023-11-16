@@ -1,11 +1,10 @@
-package com.wx.manage.config.dynamic;
+package com.wx.manage.tenant.aop;
 
 import com.baomidou.dynamic.datasource.DynamicRoutingDataSource;
 import com.baomidou.dynamic.datasource.creator.DefaultDataSourceCreator;
 import com.baomidou.dynamic.datasource.processor.DsProcessor;
 import com.baomidou.dynamic.datasource.spring.boot.autoconfigure.DataSourceProperty;
-import com.wx.manage.config.tenant.TenantContextHolder;
-import com.wx.manage.service.SystemTenantService;
+import com.wx.manage.tenant.TenantContextHolder;
 import com.wx.manage.service.TenantFrameworkService;
 import lombok.RequiredArgsConstructor;
 import org.aopalliance.intercept.MethodInvocation;

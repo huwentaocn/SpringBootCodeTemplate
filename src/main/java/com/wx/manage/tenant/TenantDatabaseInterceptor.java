@@ -1,4 +1,4 @@
-package com.wx.manage.config.tenant;
+package com.wx.manage.tenant;
 
 import cn.hutool.core.collection.CollUtil;
 import com.baomidou.mybatisplus.extension.plugins.handler.TenantLineHandler;

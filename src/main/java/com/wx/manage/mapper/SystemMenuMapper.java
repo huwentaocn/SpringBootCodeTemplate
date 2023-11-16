@@ -1,7 +1,6 @@
 package com.wx.manage.mapper;
 
 import com.baomidou.dynamic.datasource.annotation.Master;
-import com.wx.manage.config.dynamic.TenantDS;
 import com.wx.manage.pojo.entity.SystemMenu;
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 import org.apache.ibatis.annotations.Mapper;

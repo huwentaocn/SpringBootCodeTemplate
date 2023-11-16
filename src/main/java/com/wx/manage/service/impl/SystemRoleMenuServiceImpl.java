@@ -4,15 +4,11 @@ import cn.hutool.core.collection.CollUtil;
 import com.baomidou.dynamic.datasource.annotation.DSTransactional;
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.baomidou.mybatisplus.core.conditions.update.LambdaUpdateWrapper;
-import com.github.xiaoymin.knife4j.core.util.CollectionUtils;
-import com.wx.manage.constant.RedisConstant;
+import com.wx.manage.tenant.aop.TenantDS;
 import com.wx.manage.pojo.entity.SystemRoleMenu;
 import com.wx.manage.mapper.SystemRoleMenuMapper;
-import com.wx.manage.pojo.entity.SystemUserRole;
 import com.wx.manage.service.SystemRoleMenuService;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.cache.annotation.CacheEvict;
 import org.springframework.stereotype.Service;
 
 import java.util.Collection;
@@ -29,6 +25,7 @@ import java.util.stream.Collectors;
  * @since 2023-11-07
  */
 @Service
+@TenantDS
 public class SystemRoleMenuServiceImpl extends ServiceImpl<SystemRoleMenuMapper, SystemRoleMenu> implements SystemRoleMenuService {
 
 
