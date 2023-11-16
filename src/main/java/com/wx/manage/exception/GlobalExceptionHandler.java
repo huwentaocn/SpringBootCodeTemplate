@@ -48,7 +48,7 @@ public class GlobalExceptionHandler<T> {
     @ExceptionHandler(value = {GlobalException.class})
     public Result<T> customHandleException(HttpServletRequest request, GlobalException e) {
         String method = request.getRequestURI();
-        log.error(" method: " + method + " ====> 触发自定义异常！原因是:"+ e.getMsg());
+        log.error(" method: " + method + " ====> 触发自定义异常！原因是:{}"+ e.getMsg());
         return Result.fail(e.getCode(), e.getMsg());
     }
 
@@ -59,7 +59,7 @@ public class GlobalExceptionHandler<T> {
     public Result<T> handleRuntimeException(HttpServletRequest request, RuntimeException e) {
         String method = request.getRequestURI();
         log.error(" method: " + method + " ====> 触发运行时未知异常！原因是：{} ",e);
-        return Result.fail(ResultCodeEnum.RUNTIME_EXCEPTION);
+        return Result.fail(ResultCodeEnum.RUNTIME_EXCEPTION, e.getMessage());
     }
 
 
@@ -72,8 +72,8 @@ public class GlobalExceptionHandler<T> {
         String method = request.getRequestURI();
         BindingResult bindingResult = e.getBindingResult();
         String error = BindingResultResponse.getError(bindingResult);
-        log.error(" method: " + method + " ====> 触发入参异常！原因是:",error);
-        return Result.fail(ResultCodeEnum.PARAM_FAIL);
+        log.error(" method: " + method + " ====> 触发入参异常！原因是:{}",error);
+        return Result.fail(ResultCodeEnum.PARAM_FAIL, error);
     }
 
     /**
@@ -82,8 +82,8 @@ public class GlobalExceptionHandler<T> {
     @ExceptionHandler(value = IllegalArgumentException.class)
     public Result<T> handleIllegalArgumentException(HttpServletRequest request, IllegalArgumentException e) {
         String method = request.getRequestURI();
-        log.error(" method: " + method + " ====> 触发数据异常！原因是:"+ e);
-        return Result.fail(ResultCodeEnum.ILLEGAL_ARGUMENT_EXCEPTION);
+        log.error(" method: " + method + " ====> 触发数据异常！原因是:{}"+ e);
+        return Result.fail(ResultCodeEnum.ILLEGAL_ARGUMENT_EXCEPTION, e.getMessage());
     }
 
 
@@ -93,8 +93,8 @@ public class GlobalExceptionHandler<T> {
     @ExceptionHandler(value = NullPointerException.class)
     public Result<T> handleNullPointerException(HttpServletRequest request, NullPointerException e) {
         String method = request.getRequestURI();
-        log.error(" method: " + method + " ====> 触发空指针异常！原因是:",e);
-        return Result.fail(ResultCodeEnum.NULL_POINTER_EXCEPTION);
+        log.error(" method: " + method + " ====> 触发空指针异常！原因是:{}",e);
+        return Result.fail(ResultCodeEnum.NULL_POINTER_EXCEPTION, e.getMessage());
     }
 
 
@@ -118,9 +118,9 @@ public class GlobalExceptionHandler<T> {
     })
     public Result<T> handleServletException(HttpServletRequest request, Exception e) {
         String method = request.getRequestURI();
-        log.error(" method: " + method + " ====> 触发Controller上一层相关异常异常！原因是:",e);
+        log.error(" method: " + method + " ====> 触发Controller上一层相关异常异常！原因是:{}",e);
         //SERVLET_ERROR(-102, "servlet请求异常"),
-        return Result.fail(ResultCodeEnum.SERVLET_EXCEPTION);
+        return Result.fail(ResultCodeEnum.SERVLET_EXCEPTION, e.getMessage());
     }
 
 
@@ -134,8 +134,8 @@ public class GlobalExceptionHandler<T> {
     @ExceptionHandler(value = RestClientException.class)
     public Result<T> handleRestClientException(HttpServletRequest request, RestClientException e) {
         String method = request.getRequestURI();
-        log.error(" method: " + method + " ====> 触发 Rest 调用异常！原因是:",e);
-        return Result.fail(ResultCodeEnum.REST_CLIENT_EXCEPTION);
+        log.error(" method: " + method + " ====> 触发 Rest 调用异常！原因是:{}",e);
+        return Result.fail(ResultCodeEnum.REST_CLIENT_EXCEPTION, e.getMessage());
     }
 
     /**
@@ -144,8 +144,8 @@ public class GlobalExceptionHandler<T> {
     @ExceptionHandler(value = BadSqlGrammarException.class)
     public Result<T> handleException(HttpServletRequest request, BadSqlGrammarException e){
         String method = request.getRequestURI();
-        log.error(" method: " + method + " ====> 触发数据sql语法异常！原因是:",e);
-        return Result.fail(ResultCodeEnum.BAD_SQL_GRAMMAR_EXCEPTION);
+        log.error(" method: " + method + " ====> 触发数据sql语法异常！原因是:{}",e);
+        return Result.fail(ResultCodeEnum.BAD_SQL_GRAMMAR_EXCEPTION, e.getMessage());
     }
 
 
@@ -157,9 +157,9 @@ public class GlobalExceptionHandler<T> {
     @ExceptionHandler(value = Exception.class)
     public Result<T> handleException(HttpServletRequest request, Exception e) {
         String method = request.getRequestURI();
-        log.error(" method: " + method + " ====> 触发系统未知异常异常！原因是:",e);
+        log.error(" method: " + method + " ====> 触发系统未知异常异常！原因是:{}",e);
         //SERVLET_ERROR(-102, "servlet请求异常"),
-        return Result.fail(ResultCodeEnum.SYSTEM_FAIL);
+        return Result.fail(ResultCodeEnum.SYSTEM_FAIL, e.getMessage());
     }
 
 
