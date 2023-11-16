@@ -97,7 +97,7 @@ wechat:
       - appid:  #微信小程序的appid
         secret:  #微信小程序的Secret
 
-scct:
+sbct:
   tenant: # 多租户相关配置项
     enable: true
     ignore-urls:

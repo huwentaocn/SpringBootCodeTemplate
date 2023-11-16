@@ -15,7 +15,6 @@ import org.springframework.context.annotation.Configuration;
  * @Author Hu Wentao
  */
 
-@EnableConfigurationProperties(TenantProperties.class)
 @Configuration
 public class PaginationConfig {
 
@@ -23,12 +22,6 @@ public class PaginationConfig {
     public MybatisPlusInterceptor myBatisPlusInterceptor(TenantProperties properties) {
 
         MybatisPlusInterceptor interceptor = new MybatisPlusInterceptor();
-
-//        //多租户配置
-//        TenantLineInnerInterceptor tenantLineInnerInterceptor = new TenantLineInnerInterceptor(new TenantDatabaseInterceptor(properties));
-//        // 添加到 interceptor 中
-//        // 需要加在首个，主要是为了在分页插件前面。这个是 MyBatis Plus 的规定
-//        interceptor.addInnerInterceptor(tenantLineInnerInterceptor);
         //添加分页插件
         interceptor.addInnerInterceptor(new PaginationInnerInterceptor(DbType.MYSQL));
         //添加乐观锁插件
@@ -36,17 +29,4 @@ public class PaginationConfig {
 
         return interceptor;
     }
-
-//    @Bean
-//    public DsProcessor dsProcessor(
-////            TenantFrameworkService tenantFrameworkService,
-////                                   DataSource dataSource,
-////                                   DefaultDataSourceCreator dataSourceCreator
-//    ) {
-////        TenantDsProcessor tenantDsProcessor = new TenantDsProcessor(tenantFrameworkService, dataSourceCreator);
-//        TenantDsProcessor tenantDsProcessor = new TenantDsProcessor();
-//        tenantDsProcessor.setNextProcessor(new DsSpelExpressionProcessor());
-//
-//        return tenantDsProcessor;
-//    }
 }

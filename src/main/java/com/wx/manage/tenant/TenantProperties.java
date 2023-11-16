@@ -11,7 +11,7 @@ import java.util.Set;
  * @Date 2023/11/9 9:43 星期四
  * @Author Hu Wentao
  */
-@ConfigurationProperties(prefix = "scct.tenant")
+@ConfigurationProperties(prefix = "sbct.tenant")
 @Data
 public class TenantProperties {
 

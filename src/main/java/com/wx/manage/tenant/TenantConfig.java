@@ -25,7 +25,7 @@ import java.util.List;
  */
 
 @AutoConfiguration
-@ConditionalOnProperty(prefix = "scct.tenant", value = "enable", matchIfMissing = true) // 允许使用 yudao.tenant.enable=false 禁用多租户
+@ConditionalOnProperty(prefix = "sbct.tenant", value = "enable", matchIfMissing = true) // 允许使用 yudao.tenant.enable=false 禁用多租户
 @EnableConfigurationProperties(TenantProperties.class)
 public class TenantConfig {
 
