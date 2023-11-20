@@ -2,6 +2,7 @@ package com.wx.manage.pojo.entity;
 
 import com.baomidou.mybatisplus.annotation.*;
 import com.wx.manage.constant.UserTypeEnum;
+import com.wx.manage.handler.type.EncryptTypeHandler;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.Getter;
@@ -20,7 +21,7 @@ import java.time.LocalDateTime;
  */
 @Getter
 @Setter
-@TableName("wx_user")
+@TableName(value = "wx_user", autoResultMap = true)
 @ApiModel(value = "WxUser对象", description = "用户表")
 public class WxUser implements Serializable {
 
@@ -35,7 +36,7 @@ public class WxUser implements Serializable {
     private String userName;
 
     @ApiModelProperty("密码")
-    @TableField("password")
+    @TableField(value = "password", typeHandler = EncryptTypeHandler.class)
     private String password;
 
     @ApiModelProperty("昵称")

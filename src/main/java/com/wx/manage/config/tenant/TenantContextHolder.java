@@ -1,6 +1,8 @@
 package com.wx.manage.config.tenant;
 
 import com.alibaba.ttl.TransmittableThreadLocal;
+import com.wx.manage.exception.GlobalException;
+import com.wx.manage.result.ResultCodeEnum;
 
 /**
  * @Description 多租户上下文
@@ -36,7 +38,7 @@ public class TenantContextHolder {
     public static Long getRequiredTenantId() {
         Long tenantId = getTenantId();
         if (tenantId == null) {
-            throw new NullPointerException("TenantContextHolder 不存在租户编号！");
+            throw new GlobalException(ResultCodeEnum.PARAM_FAIL, "租户编号未传");
         }
         return tenantId;
     }

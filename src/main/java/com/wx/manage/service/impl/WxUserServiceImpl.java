@@ -78,7 +78,7 @@ public class WxUserServiceImpl extends ServiceImpl<WxUserMapper, WxUser> impleme
         //创建用户
         WxUser user = new WxUser();
         user.setUserName(userName);
-        user.setPassword(EncryptionUtil.encryptMD5(password));
+        user.setPassword(password);
         user.setSex(sex);
         user.setNickName(nickName);
         user.setOpenId(openId);
@@ -108,12 +108,12 @@ public class WxUserServiceImpl extends ServiceImpl<WxUserMapper, WxUser> impleme
         }
 
         //判断密码是否正确
-        if (!EncryptionUtil.encryptMD5(password).equals(wxUser.getPassword())) {
+        if (!password.equals(wxUser.getPassword())) {
             return Result.fail(ResultCodeEnum.PASSWORD_ERROR);
         }
 
         //生成token
-        String token = JwtUtil.createToken(wxUser.getId(), wxUser.getUserName());
+        String token = JwtUtil.createToken(wxUser.getId(), wxUser.getUserName(), null);
 
         //构建响应体
         UserLoginResp userLoginResp = new UserLoginResp();
@@ -159,7 +159,7 @@ public class WxUserServiceImpl extends ServiceImpl<WxUserMapper, WxUser> impleme
         redisTemplate.delete(smsCaptchaKey);
 
         //生成token
-        String token = JwtUtil.createToken(wxUser.getId(), wxUser.getUserName());
+        String token = JwtUtil.createToken(wxUser.getId(), wxUser.getUserName(), null);
 
         //构建响应体
         UserLoginResp userLoginResp = new UserLoginResp();

@@ -29,6 +29,12 @@ public class RedisConstant {
      */
     private static final String USER_INFO_KEY = "user:info:{0}";
 
+
+    /**
+     * 租户内用户信息key
+     */
+    private static final String TENANT_USER_INFO_KEY = "tenant:{0}:user:info:{1}";
+
     /**
      * 拥有指定菜单的角色编号的缓存
      *
@@ -54,5 +60,15 @@ public class RedisConstant {
      */
     public static String getUserInfoKey(Long userId) {
         return MessageFormat.format(USER_INFO_KEY, userId);
+    }
+
+    /**
+     * 获取租户用户信息key
+     * @param tenantId
+     * @param userId
+     * @return
+     */
+    public static String getTenantUserInfoKey(Long tenantId, Long userId) {
+        return MessageFormat.format(TENANT_USER_INFO_KEY, tenantId,  userId);
     }
 }

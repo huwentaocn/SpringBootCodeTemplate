@@ -12,6 +12,7 @@ import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.security.PermitAll;
+import javax.servlet.http.HttpServletRequest;
 import javax.validation.Valid;
 
 /**
@@ -22,7 +23,7 @@ import javax.validation.Valid;
 
 @RestController
 @CrossOrigin
-@Api(tags = "管理后台-认证")
+@Api(tags = "用户管理模块")
 @RequestMapping("/system/auth")
 public class AuthController {
 
@@ -31,7 +32,7 @@ public class AuthController {
 
     @PostMapping("/login")
     @ApiOperation(value= "使用账号密码登录", notes = "使用账号密码登录")
-    public Result<AuthLoginResp> login(@RequestBody @Valid AuthLoginReq req) {
-        return Result.success(authService.login(req));
+    public Result<AuthLoginResp> login(@RequestBody @Valid AuthLoginReq req, HttpServletRequest request) {
+        return Result.success(authService.login(req, request));
     }
 }

@@ -2,9 +2,9 @@ package com.wx.manage.service;
 
 import com.wx.manage.pojo.entity.SystemUsers;
 import com.wx.manage.pojo.req.AuthLoginReq;
-import com.wx.manage.pojo.req.SendSmsReq;
 import com.wx.manage.pojo.resp.AuthLoginResp;
-import com.wx.manage.result.Result;
+
+import javax.servlet.http.HttpServletRequest;
 
 /**
  * @Description 认证接口
@@ -25,9 +25,10 @@ public interface AuthService {
     /**
      * 账号登录
      *
-     * @param req 登录信息
+     * @param req     登录信息
+     * @param request
      * @return 登录结果
      */
 
-    AuthLoginResp login(AuthLoginReq req);
+    AuthLoginResp login(AuthLoginReq req, HttpServletRequest request);
 }

@@ -24,7 +24,7 @@ import lombok.Setter;
  */
 @Getter
 @Setter
-@TableName("system_users")
+@TableName(value = "system_users", autoResultMap = true)
 @ApiModel(value = "SystemUsers对象", description = "用户信息表")
 public class SystemUsers implements Serializable {
 

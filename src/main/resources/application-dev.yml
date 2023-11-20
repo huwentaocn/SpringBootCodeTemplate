@@ -114,5 +114,7 @@ sbct:
       - system_tenant_package
       - system_menu
       - infra_data_source_config
+      - system_login_log
+      - wx_user
     ignore-caches:
       - permission_menu_ids

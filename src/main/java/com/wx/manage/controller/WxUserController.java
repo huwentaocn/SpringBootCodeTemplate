@@ -27,7 +27,7 @@ import javax.validation.Valid;
  */
 @RestController
 @CrossOrigin
-@Api(tags = "用户管理模块")
+@Api(tags = "管理用户管理模块")
 @RequestMapping("/wxUser")
 public class WxUserController {
 

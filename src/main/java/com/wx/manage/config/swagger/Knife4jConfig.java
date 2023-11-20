@@ -1,6 +1,7 @@
 package com.wx.manage.config.swagger;
 
 import com.aliyun.oss.common.utils.HttpHeaders;
+import com.wx.manage.constant.HeaderConstant;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import springfox.documentation.builders.ApiInfoBuilder;
@@ -30,8 +31,12 @@ public class Knife4jConfig {
         List<Parameter> pars = new ArrayList<>();
         // Authorization
         ParameterBuilder authorizationPar = new ParameterBuilder();
-        authorizationPar.name(HttpHeaders.AUTHORIZATION).description("令牌").modelRef(new ModelRef("String")).parameterType("header").required(true).build();
+        authorizationPar.name(HeaderConstant.AUTHORIZATION).description("令牌").modelRef(new ModelRef("String")).parameterType("header").required(true).build();
         pars.add(authorizationPar.build());
+        //tenantId
+        ParameterBuilder tenantIdPar = new ParameterBuilder();
+        tenantIdPar.name(HeaderConstant.HEADER_TENANT_ID).description("租户id").modelRef(new ModelRef("String")).parameterType("header").required(true).build();
+        pars.add(tenantIdPar.build());
         return new Docket(DocumentationType.SWAGGER_2)
                 .apiInfo(new ApiInfoBuilder()
                         //设置文档的标题

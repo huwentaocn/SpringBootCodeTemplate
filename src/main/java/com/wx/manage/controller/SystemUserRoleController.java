@@ -1,5 +1,7 @@
 package com.wx.manage.controller;
 
+import io.swagger.annotations.Api;
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -12,7 +14,9 @@ import org.springframework.web.bind.annotation.RestController;
  * @since 2023-11-07
  */
 @RestController
-@RequestMapping("/systemUserRole")
+@CrossOrigin
+@Api(tags = "用户角色管理模块")
+@RequestMapping("/system/user/role")
 public class SystemUserRoleController {
 
 }

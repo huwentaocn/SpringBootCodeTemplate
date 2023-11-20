@@ -1,5 +1,6 @@
 package com.wx.manage.mapper;
 
+import com.baomidou.dynamic.datasource.annotation.Master;
 import com.wx.manage.pojo.entity.WxUser;
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 import org.apache.ibatis.annotations.Mapper;
@@ -13,6 +14,7 @@ import org.apache.ibatis.annotations.Mapper;
  * @since 2023-08-31
  */
 @Mapper
+@Master
 public interface WxUserMapper extends BaseMapper<WxUser> {
 
 }

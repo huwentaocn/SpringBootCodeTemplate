@@ -8,7 +8,6 @@ import com.wx.manage.constant.UserTypeEnum;
 import com.wx.manage.constant.logger.LoginLogTypeEnum;
 import com.wx.manage.constant.logger.LoginResultEnum;
 import com.wx.manage.exception.GlobalException;
-import com.wx.manage.pojo.entity.SystemLoginLog;
 import com.wx.manage.pojo.entity.SystemUsers;
 import com.wx.manage.pojo.req.AuthLoginReq;
 import com.wx.manage.pojo.resp.AuthLoginResp;
@@ -23,6 +22,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.stereotype.Service;
 
+import javax.servlet.http.HttpServletRequest;
 import java.util.concurrent.TimeUnit;
 
 /**
@@ -54,7 +54,7 @@ public class AuthServiceImpl implements AuthService {
             throw new GlobalException(ResultCodeEnum.AUTH_LOGIN_BAD_CREDENTIALS_ERROR);
         }
         //判断密码是否正确
-        if (!EncryptionUtil.encryptMD5(password).equals(user.getPassword())) {
+        if (!password.equals(user.getPassword())) {
             systemLoginLogService.createLoginLog(user.getId(), username, UserTypeEnum.ADMIN, logTypeEnum, LoginResultEnum.BAD_CREDENTIALS);
             throw new GlobalException(ResultCodeEnum.AUTH_LOGIN_BAD_CREDENTIALS_ERROR);
         }
@@ -68,7 +68,9 @@ public class AuthServiceImpl implements AuthService {
 
 
     @Override
-    public AuthLoginResp login(AuthLoginReq req) {
+    public AuthLoginResp login(AuthLoginReq req, HttpServletRequest request) {
+        //获取租户id
+        Long tenantId = JwtUtil.getHeaderTenantId(request);
         // 使用账号密码，进行登录
         SystemUsers user = authenticate(req.getUsername(), req.getPassword());
 //
@@ -78,10 +80,10 @@ public class AuthServiceImpl implements AuthService {
 //                    reqVO.getSocialType(), reqVO.getSocialCode(), reqVO.getSocialState()));
 //        }
         // 创建 Token 令牌，记录登录日志
-        return createTokenAfterLoginSuccess(user, LoginLogTypeEnum.LOGIN_USERNAME);
+        return createTokenAfterLoginSuccess(tenantId, user, LoginLogTypeEnum.LOGIN_USERNAME);
     }
 
-    private AuthLoginResp createTokenAfterLoginSuccess(SystemUsers user, LoginLogTypeEnum logType) {
+    private AuthLoginResp createTokenAfterLoginSuccess(Long tenantId, SystemUsers user, LoginLogTypeEnum logType) {
         Long userId = user.getId();
         String username = user.getUsername();
         String nickname = user.getNickname();
@@ -94,7 +96,7 @@ public class AuthServiceImpl implements AuthService {
 //        return AuthConvert.INSTANCE.convert(accessTokenDO);
 
         //生成token
-        String token = JwtUtil.createToken(userId, username);
+        String token = JwtUtil.createToken(userId, username, tenantId);
 
         AuthLoginResp authLoginResp = new AuthLoginResp();
         authLoginResp.setUserId(userId);
@@ -106,7 +108,7 @@ public class AuthServiceImpl implements AuthService {
         userInfoVo.setNickName(nickname);
 
         //获取当前登录用户信息，放到Redis里面，设置有效时间
-        redisTemplate.opsForValue().set(RedisConstant.getUserInfoKey(userInfoVo.getId()), userInfoVo, RedisConstant.USER_KEY_TIMEOUT, TimeUnit.DAYS);
+        redisTemplate.opsForValue().set(RedisConstant.getTenantUserInfoKey(tenantId, userInfoVo.getId()), userInfoVo, RedisConstant.USER_KEY_TIMEOUT, TimeUnit.DAYS);
 
 
         return authLoginResp;

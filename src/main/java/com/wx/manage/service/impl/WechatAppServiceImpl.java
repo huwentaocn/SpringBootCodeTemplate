@@ -83,7 +83,7 @@ public class WechatAppServiceImpl implements WechatAppService {
             }
 
             //5 使用JWT工具根据userId和userName生成token字符串
-            String token = JwtUtil.createToken(user.getId(), user.getUserName());
+            String token = JwtUtil.createToken(user.getId(), user.getUserName(), null);
 
             //6 获取当前登录用户信息，放到Redis里面，设置有效时间
             UserInfoVo userInfoVo = new UserInfoVo();

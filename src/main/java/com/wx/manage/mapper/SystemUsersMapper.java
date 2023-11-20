@@ -1,5 +1,6 @@
 package com.wx.manage.mapper;
 
+import com.baomidou.dynamic.datasource.annotation.Master;
 import com.wx.manage.config.tenant.aop.TenantDS;
 import com.wx.manage.pojo.entity.SystemUsers;
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;

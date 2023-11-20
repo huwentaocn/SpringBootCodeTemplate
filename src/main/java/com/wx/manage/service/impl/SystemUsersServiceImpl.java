@@ -2,6 +2,7 @@ package com.wx.manage.service.impl;
 
 import cn.hutool.core.util.StrUtil;
 import com.baomidou.dynamic.datasource.annotation.DSTransactional;
+import com.baomidou.dynamic.datasource.annotation.Master;
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.wx.manage.constant.EnableStatusEnum;
 import com.wx.manage.exception.GlobalException;

@@ -10,6 +10,7 @@ import com.wx.manage.pojo.resp.TenantResp;
 import com.wx.manage.result.Result;
 import com.wx.manage.service.SystemTenantService;
 import com.wx.manage.until.ExcelUtils;
+import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
@@ -28,6 +29,8 @@ import java.util.List;
  * @since 2023-11-08
  */
 @RestController
+@CrossOrigin
+@Api(tags = "租户管理模块")
 @RequestMapping("/system/tenant")
 public class SystemTenantController {
 

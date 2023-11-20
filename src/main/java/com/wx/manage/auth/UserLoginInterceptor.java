@@ -3,7 +3,9 @@ package com.wx.manage.auth;
 import com.wx.manage.config.tenant.TenantContextHolder;
 import com.wx.manage.constant.RedisConstant;
 import com.wx.manage.constant.HeaderConstant;
+import com.wx.manage.exception.GlobalException;
 import com.wx.manage.pojo.vo.UserInfoVo;
+import com.wx.manage.result.ResultCodeEnum;
 import com.wx.manage.until.JwtUtil;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.data.redis.core.RedisTemplate;
@@ -35,13 +37,15 @@ public class UserLoginInterceptor implements HandlerInterceptor {
         if (StringUtils.isNotBlank(tenantId)) {
             TenantContextHolder.setTenantId(Long.valueOf(tenantId));
         }
-        //获取用户信息
-//        UserInfoVo userInfo = this.getUserInfo(request);
+        //获取管理用户信息
+        UserInfoVo userInfo = this.getUserInfo(request);
+        //获取租户内用户信息
 
-//        //拿不到用户信息，返回
-//        if (userInfo == null) {
-//            throw new GlobalException(ResultCodeEnum.LOGIN_AUTH);
-//        }
+
+        //拿不到用户信息，返回
+        if (userInfo == null) {
+            throw new GlobalException(ResultCodeEnum.LOGIN_AUTH);
+        }
 
         return true;
     }
@@ -55,6 +59,7 @@ public class UserLoginInterceptor implements HandlerInterceptor {
     private UserInfoVo getUserInfo(HttpServletRequest request) {
         //从请求头获取token
         String token = request.getHeader(HeaderConstant.AUTHORIZATION);
+        String tenantIdStr = request.getHeader(HeaderConstant.HEADER_TENANT_ID);
 
         UserInfoVo userInfoVo = null;
         //判断token不为空
@@ -62,8 +67,14 @@ public class UserLoginInterceptor implements HandlerInterceptor {
             //从token获取userId
             Long userId = JwtUtil.getUserId(token);
             //根据userId到Redis获取用户信息
-            userInfoVo = (UserInfoVo)redisTemplate.opsForValue()
-                    .get(RedisConstant.getUserInfoKey(userId));
+            if (StringUtils.isBlank(tenantIdStr)) {
+                userInfoVo = (UserInfoVo)redisTemplate.opsForValue()
+                        .get(RedisConstant.getUserInfoKey(userId));
+            } else {
+                userInfoVo = (UserInfoVo)redisTemplate.opsForValue()
+                        .get(RedisConstant.getTenantUserInfoKey(Long.valueOf(tenantIdStr), userId));
+            }
+
             //获取数据放到ThreadLocal里面
             if(userInfoVo != null) {
                 AuthContextHolder.setUserId(userInfoVo.getId());

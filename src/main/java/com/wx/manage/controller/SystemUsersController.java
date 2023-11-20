@@ -8,6 +8,7 @@ import com.wx.manage.pojo.resp.UserResp;
 import com.wx.manage.pojo.resp.UserSimpleResp;
 import com.wx.manage.result.Result;
 import com.wx.manage.service.SystemUsersService;
+import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
@@ -24,6 +25,8 @@ import java.util.List;
  * @since 2023-11-07
  */
 @RestController
+@CrossOrigin
+@Api(tags = "用户管理模块")
 @RequestMapping("/system/users")
 public class SystemUsersController {
 
