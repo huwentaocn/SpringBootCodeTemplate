@@ -1,4 +1,4 @@
-package com.wx.manage.tenant;
+package com.wx.manage.config.tenant;
 
 import lombok.Data;
 import org.springframework.boot.context.properties.ConfigurationProperties;

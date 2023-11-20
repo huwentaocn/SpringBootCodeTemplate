@@ -3,7 +3,7 @@ package com.wx.manage.service.impl;
 import cn.hutool.core.util.ObjectUtil;
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.google.common.annotations.VisibleForTesting;
-import com.wx.manage.tenant.aop.TenantDS;
+import com.wx.manage.config.tenant.aop.TenantDS;
 import com.wx.manage.constant.DataScopeEnum;
 import com.wx.manage.constant.EnableStatusEnum;
 import com.wx.manage.constant.RoleCodeEnum;

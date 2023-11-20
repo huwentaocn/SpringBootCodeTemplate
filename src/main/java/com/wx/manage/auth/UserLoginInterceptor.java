@@ -1,6 +1,6 @@
 package com.wx.manage.auth;
 
-import com.wx.manage.tenant.TenantContextHolder;
+import com.wx.manage.config.tenant.TenantContextHolder;
 import com.wx.manage.constant.RedisConstant;
 import com.wx.manage.constant.HeaderConstant;
 import com.wx.manage.pojo.vo.UserInfoVo;

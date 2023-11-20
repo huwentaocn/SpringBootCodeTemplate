@@ -1,6 +1,6 @@
-package com.wx.manage.tenant.aop;
+package com.wx.manage.config.tenant.aop;
 
-import com.wx.manage.tenant.TenantContextHolder;
+import com.wx.manage.config.tenant.TenantContextHolder;
 import lombok.extern.slf4j.Slf4j;
 import org.aspectj.lang.ProceedingJoinPoint;
 import org.aspectj.lang.annotation.Around;

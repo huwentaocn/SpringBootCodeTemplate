@@ -1,6 +1,6 @@
 package com.wx.manage.config.mybatisplus;
 
-import com.wx.manage.tenant.TenantConfig;
+import com.wx.manage.config.tenant.TenantConfig;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Import;
 

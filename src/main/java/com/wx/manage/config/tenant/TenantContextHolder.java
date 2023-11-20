@@ -1,4 +1,4 @@
-package com.wx.manage.tenant;
+package com.wx.manage.config.tenant;
 
 import com.alibaba.ttl.TransmittableThreadLocal;
 

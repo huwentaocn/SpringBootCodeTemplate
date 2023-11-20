@@ -1,6 +1,6 @@
 package com.wx.manage.until;
 
-import com.wx.manage.tenant.TenantContextHolder;
+import com.wx.manage.config.tenant.TenantContextHolder;
 
 import java.util.Map;
 import java.util.concurrent.Callable;

@@ -1,12 +1,12 @@
-package com.wx.manage.tenant;
+package com.wx.manage.config.tenant;
 
 import com.baomidou.dynamic.datasource.processor.DsProcessor;
 import com.baomidou.dynamic.datasource.processor.DsSpelExpressionProcessor;
 import com.baomidou.mybatisplus.extension.plugins.MybatisPlusInterceptor;
 import com.baomidou.mybatisplus.extension.plugins.inner.InnerInterceptor;
 import com.baomidou.mybatisplus.extension.plugins.inner.TenantLineInnerInterceptor;
-import com.wx.manage.tenant.aop.TenantIgnoreAspect;
-import com.wx.manage.tenant.aop.TenantDsProcessor;
+import com.wx.manage.config.tenant.aop.TenantIgnoreAspect;
+import com.wx.manage.config.tenant.aop.TenantDsProcessor;
 import com.wx.manage.service.SystemTenantService;
 import com.wx.manage.service.TenantFrameworkService;
 import com.wx.manage.service.impl.TenantFrameworkServiceImpl;

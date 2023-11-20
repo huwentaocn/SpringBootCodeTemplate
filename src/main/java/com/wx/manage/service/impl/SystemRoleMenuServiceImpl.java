@@ -4,7 +4,7 @@ import cn.hutool.core.collection.CollUtil;
 import com.baomidou.dynamic.datasource.annotation.DSTransactional;
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.baomidou.mybatisplus.core.conditions.update.LambdaUpdateWrapper;
-import com.wx.manage.tenant.aop.TenantDS;
+import com.wx.manage.config.tenant.aop.TenantDS;
 import com.wx.manage.pojo.entity.SystemRoleMenu;
 import com.wx.manage.mapper.SystemRoleMenuMapper;
 import com.wx.manage.service.SystemRoleMenuService;
