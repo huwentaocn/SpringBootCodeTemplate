@@ -86,6 +86,13 @@ public class SystemRoleMenuServiceImpl extends ServiceImpl<SystemRoleMenuMapper,
         return remove(updateWrapper);
     }
 
+    @Override
+    public Boolean removeListByMenuId(Long menuId) {
+        LambdaUpdateWrapper<SystemRoleMenu> updateWrapper = new LambdaUpdateWrapper<>();
+        updateWrapper.eq(SystemRoleMenu::getMenuId, menuId);
+        return remove(updateWrapper);
+    }
+
 
     /**
      * 删除指定角色关联的指定菜单

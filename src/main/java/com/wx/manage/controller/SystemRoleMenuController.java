@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
+import springfox.documentation.annotations.ApiIgnore;
 
 /**
  * <p>
@@ -17,7 +18,8 @@ import org.springframework.web.bind.annotation.RestController;
  */
 @RestController
 @CrossOrigin
-@Api(tags = "角色菜单管理模块")
+@ApiIgnore
+@Api(tags = "前台 - 角色菜单管理")
 @RequestMapping("/system/role/menu")
 public class SystemRoleMenuController {
 

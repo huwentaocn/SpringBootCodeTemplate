@@ -9,7 +9,7 @@
         <result column="ip" property="ip" />
         <result column="port" property="port" />
         <result column="url" property="url" />
-        <result column="user_name" property="userName" />
+        <result column="username" property="username" />
         <result column="password" property="password" />
         <result column="sort" property="sort" />
         <result column="type" property="type" />
@@ -23,7 +23,7 @@
 
     <!-- 通用查询结果列 -->
     <sql id="Base_Column_List">
-        id, name, ip, port, url, user_name, password, sort, type, is_deleted, version, creator, create_time, updater, update_time
+        id, name, ip, port, url, username, password, sort, type, is_deleted, version, creator, create_time, updater, update_time
     </sql>
 
 </mapper>

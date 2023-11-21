@@ -14,6 +14,7 @@ import com.wx.manage.constant.RoleCodeEnum;
 import com.wx.manage.constant.RoleTypeEnum;
 import com.wx.manage.exception.GlobalException;
 import com.wx.manage.handler.tenant.TenantInfoHandler;
+import com.wx.manage.handler.tenant.TenantMenuHandler;
 import com.wx.manage.pojo.entity.*;
 import com.wx.manage.mapper.SystemTenantMapper;
 import com.wx.manage.pojo.excel.TenantExcelVo;
@@ -87,6 +88,9 @@ public class SystemTenantServiceImpl extends ServiceImpl<SystemTenantMapper, Sys
     @Autowired
     private SystemTenantDataSourceService tenantDataSourceService;
 
+    @Autowired
+    private SystemMenuService menuService;
+
     @Override
     public TenantResp getTenantByName(String name) {
         LambdaQueryWrapper<SystemTenant> queryWrapper = new LambdaQueryWrapper<>();
@@ -120,7 +124,7 @@ public class SystemTenantServiceImpl extends ServiceImpl<SystemTenantMapper, Sys
         DataSourceProperty dataSourceProperty = new DataSourceProperty();
         dataSourceProperty.setPoolName(tenantDataSource.getDatabaseName());
         dataSourceProperty.setUrl(tenantDataSource.getUrl());
-        dataSourceProperty.setUsername(dataSource.getUserName());
+        dataSourceProperty.setUsername(dataSource.getUsername());
         dataSourceProperty.setPassword(dataSource.getPassword());
 
         return dataSourceProperty;
@@ -213,7 +217,7 @@ public class SystemTenantServiceImpl extends ServiceImpl<SystemTenantMapper, Sys
             throw new GlobalException(ResultCodeEnum.DATA_SOURCE_CONFIG_NOT_EXISTS);
         }
 
-        String username = dataSource.getUserName();
+        String username = dataSource.getUsername();
         String password = dataSource.getPassword();
         String url = dataSource.getUrl();
         String dbName = "tenant-" + tenant.getId();
@@ -428,6 +432,25 @@ public class SystemTenantServiceImpl extends ServiceImpl<SystemTenantMapper, Sys
         SystemTenant tenant = getById(TenantContextHolder.getRequiredTenantId());
         // 执行处理器
         handler.handle(tenant);
+    }
+
+
+    @Override
+    public void handleTenantMenu(TenantMenuHandler handler) {
+        // 如果禁用，则不执行逻辑
+        if (isTenantDisable()) {
+            return;
+        }
+        // 获得租户，然后获得菜单
+        SystemTenant tenant = getById(TenantContextHolder.getRequiredTenantId());
+        Set<Long> menuIds;
+        if (isSystemTenant(tenant)) { // 系统租户，菜单是全量的
+            menuIds = menuService.list().stream().map(SystemMenu::getId).collect(Collectors.toSet());
+        } else {
+            menuIds = tenantPackageService.getById(tenant.getPackageId()).getMenuIds();
+        }
+        // 执行处理器
+        handler.handle(menuIds);
     }
 
     @Override

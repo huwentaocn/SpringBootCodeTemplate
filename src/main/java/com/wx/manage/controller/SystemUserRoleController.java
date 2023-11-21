@@ -4,6 +4,7 @@ import io.swagger.annotations.Api;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
+import springfox.documentation.annotations.ApiIgnore;
 
 /**
  * <p>
@@ -15,7 +16,8 @@ import org.springframework.web.bind.annotation.RestController;
  */
 @RestController
 @CrossOrigin
-@Api(tags = "用户角色管理模块")
+@Api(tags = "前台 - 用户角色管理")
+@ApiIgnore
 @RequestMapping("/system/user/role")
 public class SystemUserRoleController {
 

@@ -2,6 +2,7 @@ package com.wx.manage.service;
 
 import com.baomidou.dynamic.datasource.spring.boot.autoconfigure.DataSourceProperty;
 import com.wx.manage.handler.tenant.TenantInfoHandler;
+import com.wx.manage.handler.tenant.TenantMenuHandler;
 import com.wx.manage.pojo.entity.SystemTenant;
 import com.baomidou.mybatisplus.extension.service.IService;
 import com.wx.manage.pojo.excel.TenantExcelVo;
@@ -63,6 +64,15 @@ public interface SystemTenantService extends IService<SystemTenant> {
      * @param handler 处理器
      */
     void handleTenantInfo(TenantInfoHandler handler);
+
+
+    /**
+     * 进行租户的菜单处理逻辑
+     * 其中，租户编号从 {@link TenantContextHolder} 上下文中获取
+     *
+     * @param handler 处理器
+     */
+    void handleTenantMenu(TenantMenuHandler handler);
 
     /**
      * 获取租户id集合

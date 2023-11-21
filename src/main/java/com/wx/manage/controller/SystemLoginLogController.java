@@ -4,6 +4,7 @@ import io.swagger.annotations.Api;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
+import springfox.documentation.annotations.ApiIgnore;
 
 /**
  * <p>
@@ -15,7 +16,8 @@ import org.springframework.web.bind.annotation.RestController;
  */
 @RestController
 @CrossOrigin
-@Api(tags = "登录日志管理模块")
+@ApiIgnore
+@Api(tags = "管理后台 - 登录日志管理模块")
 @RequestMapping("/system/login/og")
 public class SystemLoginLogController {
 

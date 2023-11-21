@@ -28,7 +28,7 @@ import java.util.List;
  */
 @RestController
 @CrossOrigin
-@Api(tags = "租户套餐管理模块")
+@Api(tags = "管理后台 - 租户套餐管理")
 @RequestMapping("/system/tenant/package")
 public class SystemTenantPackageController {
 

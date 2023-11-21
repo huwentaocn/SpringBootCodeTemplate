@@ -87,6 +87,19 @@ public enum ResultCodeEnum {
     // ========== AUTH 模块 1002000000 ==========
     AUTH_LOGIN_BAD_CREDENTIALS_ERROR(1002000000, "登录失败，账号密码不正确"),
     AUTH_LOGIN_USER_DISABLED_ERROR(1002000001, "登录失败，账号被禁用"),
+    AUTH_LOGIN_CAPTCHA_CODE_ERROR(1002000004, "验证码不正确，原因：{}"),
+    AUTH_THIRD_LOGIN_NOT_BIND(1002000005, "未绑定账号，需要进行绑定"),
+    AUTH_TOKEN_EXPIRED(1002000006, "Token 已经过期"),
+    AUTH_MOBILE_NOT_EXISTS(1002000007, "手机号不存在"),
+
+    // ========== 菜单模块 1002001000 ==========
+    MENU_NAME_DUPLICATE(1002001000, "已经存在该名字的菜单"),
+    MENU_PARENT_NOT_EXISTS(1002001001, "父菜单不存在"),
+    MENU_PARENT_ERROR(1002001002, "不能设置自己为父菜单"),
+    MENU_NOT_EXISTS(1002001003, "菜单不存在"),
+    MENU_EXISTS_CHILDREN(1002001004, "存在子菜单，无法删除"),
+    MENU_PARENT_NOT_DIR_OR_MENU(1002001005, "父菜单的类型必须是目录或者菜单"),
+
 
     // ========== 角色模块 1002002000 ==========
     ROLE_NOT_EXISTS(1002002000, "角色不存在"),
@@ -118,6 +131,8 @@ public enum ResultCodeEnum {
     DATA_SOURCE_CREATE_DATABASE_ERROR(1001007004, "数据源创建库失败"),
 
     DATA_SOURCE_INIT_TABLE_STRUCT_ERROR(1001007005, "数据源初始化表结构失败"),
+
+    DATA_SOURCE_IS_USED(1001007006, "数据源被占用"),
 
     // ========== 租户信息 1002015000 ==========
     TENANT_NOT_EXISTS(1002015000, "租户不存在"),

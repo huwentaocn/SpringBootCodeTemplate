@@ -24,7 +24,7 @@ import java.util.List;
  */
 @RestController
 @CrossOrigin
-@Api(tags = "角色管理模块")
+@Api(tags = "前台 - 角色管理")
 @RequestMapping("/system/role")
 public class SystemRoleController {
     

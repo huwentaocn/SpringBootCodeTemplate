@@ -21,7 +21,7 @@ import javax.validation.Valid;
  */
 
 @Slf4j
-@Api(tags = "短信管理模块")
+@Api(tags = "前台 - 短信管理模块")
 @RestController
 @CrossOrigin
 @RequestMapping("/sms")

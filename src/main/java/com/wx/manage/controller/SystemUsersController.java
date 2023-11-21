@@ -26,7 +26,7 @@ import java.util.List;
  */
 @RestController
 @CrossOrigin
-@Api(tags = "用户管理模块")
+@Api(tags = "前台 - 用户管理")
 @RequestMapping("/system/users")
 public class SystemUsersController {
 

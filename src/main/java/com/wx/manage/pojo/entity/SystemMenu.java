@@ -28,6 +28,11 @@ public class SystemMenu implements Serializable {
 
     private static final long serialVersionUID = 1L;
 
+    /**
+     * 菜单编号 - 根节点
+     */
+    public static final Long ID_ROOT = 0L;
+
     @ApiModelProperty("菜单ID")
     @TableId(value = "id", type = IdType.AUTO)
     private Long id;

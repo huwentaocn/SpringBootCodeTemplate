@@ -9,6 +9,7 @@ import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
+import springfox.documentation.annotations.ApiIgnore;
 
 import javax.validation.Valid;
 import java.util.List;
@@ -23,7 +24,8 @@ import java.util.List;
  */
 @RestController
 @CrossOrigin
-@Api(tags = "数据源管理模块")
+@Api(tags = "管理后台 - 数据源管理【废弃】")
+@ApiIgnore
 @RequestMapping("/infra/dataSourceConfig")
 public class InfraDataSourceConfigController {
 

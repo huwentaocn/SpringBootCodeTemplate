@@ -30,14 +30,14 @@ import java.util.List;
  */
 @RestController
 @CrossOrigin
-@Api(tags = "租户管理模块")
+@Api(tags = "管理后台 - 租户管理")
 @RequestMapping("/system/tenant")
 public class SystemTenantController {
 
     @Autowired
     private SystemTenantService tenantService;
 
-    @GetMapping("/get/tenant/by/name")
+    @GetMapping("/hero/get/tenant/by/name")
     @ApiOperation(value = "根据租户名称获取租户信息", notes = "根据租户名称获取租户信息")
     public Result<TenantResp> getTenantByName(@RequestParam("name") String name) {
         return Result.success(tenantService.getTenantByName(name));

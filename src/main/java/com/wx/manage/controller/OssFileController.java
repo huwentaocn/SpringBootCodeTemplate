@@ -23,7 +23,7 @@ import org.springframework.web.multipart.MultipartFile;
  */
 
 @Slf4j
-@Api(tags = "oss文件管理模块")
+@Api(tags = "前台 - oss文件管理模块")
 @CrossOrigin
 @RestController
 @RequestMapping("/ossFile")

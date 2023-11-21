@@ -15,6 +15,7 @@ import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.Getter;
 import lombok.Setter;
+import lombok.experimental.Accessors;
 
 /**
  * <p>
@@ -26,11 +27,17 @@ import lombok.Setter;
  */
 @Getter
 @Setter
+@Accessors(chain = true)
 @TableName(value = "system_data_source", autoResultMap = true)
 @ApiModel(value = "SystemDataSource对象", description = "数据源表	")
 public class SystemDataSource implements Serializable {
 
     private static final long serialVersionUID = 1L;
+
+    /**
+     * 主键编号 - Master 数据源
+     */
+    public static final Long ID_MASTER = 0L;
 
     @ApiModelProperty("唯一id")
     @TableId(value = "id", type = IdType.ASSIGN_ID)
@@ -53,8 +60,8 @@ public class SystemDataSource implements Serializable {
     private String url;
 
     @ApiModelProperty("用户名")
-    @TableField("user_name")
-    private String userName;
+    @TableField("username")
+    private String username;
 
     @ApiModelProperty("密码")
     @TableField(value = "password", typeHandler = EncryptTypeHandler.class)

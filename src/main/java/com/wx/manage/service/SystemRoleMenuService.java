@@ -40,4 +40,11 @@ public interface SystemRoleMenuService extends IService<SystemRoleMenu> {
      */
     Boolean removeListByRoleId(Long roleId);
 
+    /**
+     * 删除指定菜单绑定的角色关系
+     * @param menuId
+     * @return
+     */
+    Boolean removeListByMenuId(Long menuId);
+
 }

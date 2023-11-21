@@ -4,6 +4,10 @@ import com.wx.manage.pojo.entity.SystemDataSource;
 import com.baomidou.mybatisplus.extension.service.IService;
 import com.wx.manage.pojo.req.DataSourceConfigCreateVo;
 import com.wx.manage.pojo.req.DataSourceCreateVo;
+import com.wx.manage.pojo.req.DataSourceUpdateVo;
+import com.wx.manage.pojo.resp.DataSourceResp;
+
+import java.util.List;
 
 /**
  * <p>
@@ -15,7 +19,15 @@ import com.wx.manage.pojo.req.DataSourceCreateVo;
  */
 public interface SystemDataSourceService extends IService<SystemDataSource> {
 
-    Long createDataSourceConfig(DataSourceCreateVo createReq);
+    Long createDataSource(DataSourceCreateVo createReq);
 
     Boolean testDataSource(Long id);
+
+    Boolean updateDataSource(DataSourceUpdateVo updateReq);
+
+    Boolean deleteDataSource(Long id);
+
+    DataSourceResp getDataSourceDetail(Long id);
+
+    List<DataSourceResp> getDataSourceList();
 }

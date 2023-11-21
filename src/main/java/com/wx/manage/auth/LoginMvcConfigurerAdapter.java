@@ -36,6 +36,9 @@ public class LoginMvcConfigurerAdapter implements WebMvcConfigurer {
         add("/**/sms/**");
 
         add("/**/login/**");
+
+        //放行hero
+        add("/**/hero/**");
     }};
 
     @Override
