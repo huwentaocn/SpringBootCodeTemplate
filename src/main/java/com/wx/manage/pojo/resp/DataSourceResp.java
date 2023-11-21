@@ -1,5 +1,6 @@
 package com.wx.manage.pojo.resp;
 
+import com.wx.manage.pojo.vo.DataSourceBaseVo;
 import com.wx.manage.pojo.vo.DataSourceConfigBaseVo;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
@@ -15,7 +16,7 @@ import java.time.LocalDateTime;
 
 @Data
 @ApiModel(value = "DataSourceResp", description = "数据源响应体")
-public class DataSourceResp extends DataSourceConfigBaseVo {
+public class DataSourceResp extends DataSourceBaseVo {
 
     @ApiModelProperty(name = "主键编号", required = true, example = "1024")
     private Long id;
