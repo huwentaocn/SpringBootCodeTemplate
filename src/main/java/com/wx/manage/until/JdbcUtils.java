@@ -6,6 +6,7 @@ import java.io.BufferedReader;
 import java.io.FileReader;
 import java.sql.Connection;
 import java.sql.DriverManager;
+import java.sql.SQLException;
 import java.sql.Statement;
 
 /**
@@ -88,9 +89,61 @@ public class JdbcUtils {
         }
     }
 
+    /**
+     * 执行sql
+     * @param url
+     * @param username
+     * @param password
+     * @param sql
+     * @return
+     */
+    public static boolean executeSql(String url, String username, String password, String sql) {
+
+        try {
+            Connection conn = DriverManager.getConnection(url, username, password);
+            Statement stmt = conn.createStatement();
+
+            stmt.executeUpdate(sql);
+
+            stmt.close();
+            conn.close();
+            return true;
+        } catch (SQLException e) {
+            e.printStackTrace();
+            return false;
+        }
+    }
+
+
+    /**
+     * 创建数据库
+     * @param url
+     * @param username
+     * @param password
+     * @param dbName
+     * @return
+     */
+    public static boolean createDatabase(String url, String username, String password, String dbName) {
+
+        try {
+            Connection conn = DriverManager.getConnection(url, username, password);
+            Statement stmt = conn.createStatement();
+
+            String sql = "CREATE DATABASE `" + dbName + "`";
+            stmt.executeUpdate(sql);
+
+            stmt.close();
+            conn.close();
+            return true;
+        } catch (SQLException e) {
+            e.printStackTrace();
+            return false;
+        }
+    }
+
 //    public static void main(String[] args) {
 //        String url = "jdbc:mysql://127.0.0.1:3306?allowMultiQueries=true&useUnicode=true&useSSL=false&characterEncoding=UTF-8&serverTimezone=Asia/Shanghai&autoReconnect=true&nullCatalogMeansCurrent=true";
-//        boolean root = isConnectionOK(url, "root", "123456");
+//        boolean root = executeSql(url, "root", "123456", "CREATE DATABASE test1111");
 //        System.out.println(root);
 //    }
 

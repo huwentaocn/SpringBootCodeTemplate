@@ -18,13 +18,13 @@ import java.util.Collections;
 @SpringBootTest
 public class CodeGeneratorNew {
 
-    @Value("${spring.datasource.url}")
+    @Value("${spring.datasource.dynamic.datasource.master.url}")
     String url;
 
-    @Value("${spring.datasource.username}")
+    @Value("${spring.datasource.dynamic.datasource.master.username}")
     String userName;
 
-    @Value("${spring.datasource.password}")
+    @Value("${spring.datasource.dynamic.datasource.master.password}")
     String password;
 
 
@@ -73,7 +73,7 @@ public class CodeGeneratorNew {
                 .strategyConfig(builder -> {
                     builder
                             //entity配置策略
-//                            .addInclude("wx_project")
+                            .addInclude("system_tenant_data_source")
                             .entityBuilder()
                             .enableLombok()
                             .idType(IdType.ASSIGN_ID) //id策略，雪花算法

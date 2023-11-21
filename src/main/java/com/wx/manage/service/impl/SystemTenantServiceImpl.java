@@ -14,11 +14,8 @@ import com.wx.manage.constant.RoleCodeEnum;
 import com.wx.manage.constant.RoleTypeEnum;
 import com.wx.manage.exception.GlobalException;
 import com.wx.manage.handler.tenant.TenantInfoHandler;
-import com.wx.manage.pojo.entity.InfraDataSourceConfig;
-import com.wx.manage.pojo.entity.SystemRole;
-import com.wx.manage.pojo.entity.SystemTenant;
+import com.wx.manage.pojo.entity.*;
 import com.wx.manage.mapper.SystemTenantMapper;
-import com.wx.manage.pojo.entity.SystemTenantPackage;
 import com.wx.manage.pojo.excel.TenantExcelVo;
 import com.wx.manage.pojo.page.PageResult;
 import com.wx.manage.pojo.req.*;
@@ -27,6 +24,7 @@ import com.wx.manage.result.ResultCodeEnum;
 import com.wx.manage.service.*;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.wx.manage.until.DateUtils;
+import com.wx.manage.until.JdbcUtils;
 import com.wx.manage.until.TenantUtils;
 import lombok.SneakyThrows;
 import lombok.extern.slf4j.Slf4j;
@@ -73,6 +71,10 @@ public class SystemTenantServiceImpl extends ServiceImpl<SystemTenantMapper, Sys
     private InfraDataSourceConfigService dataSourceConfigService;
 
     @Autowired
+    @Lazy
+    private SystemDataSourceService dataSourceService;
+
+    @Autowired
     @Lazy // 避免循环依赖的报错
     private SystemUsersService usersService;
 
@@ -81,6 +83,9 @@ public class SystemTenantServiceImpl extends ServiceImpl<SystemTenantMapper, Sys
 
     @Autowired
     private SystemTenantMapper tenantMapper;
+
+    @Autowired
+    private SystemTenantDataSourceService tenantDataSourceService;
 
     @Override
     public TenantResp getTenantByName(String name) {
@@ -93,24 +98,79 @@ public class SystemTenantServiceImpl extends ServiceImpl<SystemTenantMapper, Sys
         return tenantResp;
     }
 
+    //TODO 明天要适配这个方法，改为用新的那套逻辑
     @Override
     @SneakyThrows
     public DataSourceProperty getDataSourceProperty(Long id) {
         // 获得租户对应的数据源配置
-        SystemTenant tenant = getById(id);
-        if (tenant == null) {
-            return null;
+        LambdaQueryWrapper<SystemTenantDataSource> queryWrapper = new LambdaQueryWrapper<>();
+        queryWrapper.eq(SystemTenantDataSource::getTenantId, id);
+        SystemTenantDataSource tenantDataSource = tenantDataSourceService.getOne(queryWrapper);
+        if (tenantDataSource == null) {
+            throw new GlobalException(ResultCodeEnum.DATA_NOT_EXIST_FAIL, "租户未绑定数据源");
         }
-        InfraDataSourceConfig dataSourceConfig = dataSourceConfigService.getById(tenant.getDataSourceConfigId());
+
+        //获取数据源账号密码
+        SystemDataSource dataSource = dataSourceService.getById(tenantDataSource.getDataSourceId());
+        if (dataSource == null) {
+            throw new GlobalException(ResultCodeEnum.DATA_SOURCE_CONFIG_NOT_EXISTS);
+        }
+
         // 转换成 dynamic-datasource 配置
         DataSourceProperty dataSourceProperty = new DataSourceProperty();
-        dataSourceProperty.setPoolName(dataSourceConfig.getName());
-        dataSourceProperty.setUrl(dataSourceConfig.getUrl());
-        dataSourceProperty.setUsername(dataSourceConfig.getUsername());
-        dataSourceProperty.setPassword(dataSourceConfig.getPassword());
+        dataSourceProperty.setPoolName(tenantDataSource.getDatabaseName());
+        dataSourceProperty.setUrl(tenantDataSource.getUrl());
+        dataSourceProperty.setUsername(dataSource.getUserName());
+        dataSourceProperty.setPassword(dataSource.getPassword());
 
         return dataSourceProperty;
     }
+
+//    //TODO 明天要适配这个方法，改为用新的那套逻辑
+//    @Override
+//    @SneakyThrows
+//    public DataSourceProperty getDataSourceProperty(Long id) {
+//        // 获得租户对应的数据源配置
+//        SystemTenant tenant = getById(id);
+//        if (tenant == null) {
+//            return null;
+//        }
+//        InfraDataSourceConfig dataSourceConfig = dataSourceConfigService.getById(tenant.getDataSourceConfigId());
+//        // 转换成 dynamic-datasource 配置
+//        DataSourceProperty dataSourceProperty = new DataSourceProperty();
+//        dataSourceProperty.setPoolName(dataSourceConfig.getName());
+//        dataSourceProperty.setUrl(dataSourceConfig.getUrl());
+//        dataSourceProperty.setUsername(dataSourceConfig.getUsername());
+//        dataSourceProperty.setPassword(dataSourceConfig.getPassword());
+//
+//        return dataSourceProperty;
+//    }
+
+//    @Override
+//    @DSTransactional // 多数据源，使用 @DSTransactional 保证本地事务，以及数据源的切换
+//    public Long createTenant(TenantCreateReq createReq) {
+//        // 校验套餐被禁用
+//        SystemTenantPackage tenantPackage = tenantPackageService.validTenantPackage(createReq.getPackageId());
+//
+//        //校验数据源是否正确
+//        dataSourceConfigService.testDataSourceConfig(createReq.getDataSourceConfigId());
+//
+//        //创建租户
+//        SystemTenant tenant = new SystemTenant();
+//        BeanUtils.copyProperties(createReq, tenant);
+//        saveOrUpdate(tenant);
+//
+//        TenantUtils.execute(tenant.getId(), () -> {
+//            // 创建角色，并分配菜单
+//            Long roleId = createRoleAndAssignRoleMenu(tenantPackage);
+//            // 创建用户，并分配角色
+//            Long userId = createUserAndAssignRole(roleId, createReq);
+//            // 修改租户的管理员
+//            tenant.setContactUserId(userId);
+//            saveOrUpdate(tenant);
+//        });
+//        return tenant.getId();
+//    }
 
     @Override
     @DSTransactional // 多数据源，使用 @DSTransactional 保证本地事务，以及数据源的切换
@@ -119,12 +179,15 @@ public class SystemTenantServiceImpl extends ServiceImpl<SystemTenantMapper, Sys
         SystemTenantPackage tenantPackage = tenantPackageService.validTenantPackage(createReq.getPackageId());
 
         //校验数据源是否正确
-        dataSourceConfigService.testDataSourceConfig(createReq.getDataSourceConfigId());
+        dataSourceService.testDataSource(createReq.getDataSourceConfigId());
 
         //创建租户
         SystemTenant tenant = new SystemTenant();
         BeanUtils.copyProperties(createReq, tenant);
         saveOrUpdate(tenant);
+
+        //创建数据库并初始化表
+        createDatabaseAndInitTableStructure(createReq.getDataSourceConfigId(), tenant);
 
         TenantUtils.execute(tenant.getId(), () -> {
             // 创建角色，并分配菜单
@@ -136,6 +199,53 @@ public class SystemTenantServiceImpl extends ServiceImpl<SystemTenantMapper, Sys
             saveOrUpdate(tenant);
         });
         return tenant.getId();
+    }
+
+    /**
+     * 创建租户库并且初始化表结构
+     * @param dataSourceId
+     * @param tenant
+     * @return
+     */
+    private void createDatabaseAndInitTableStructure(Long dataSourceId, SystemTenant tenant) {
+        SystemDataSource dataSource = dataSourceService.getById(dataSourceId);
+        if (dataSource == null) {
+            throw new GlobalException(ResultCodeEnum.DATA_SOURCE_CONFIG_NOT_EXISTS);
+        }
+
+        String username = dataSource.getUserName();
+        String password = dataSource.getPassword();
+        String url = dataSource.getUrl();
+        String dbName = "tenant-" + tenant.getId();
+        String databaseUrl = url.replace("?", "/" + dbName + "?");
+
+        boolean connectionOK = JdbcUtils.isConnectionOK(databaseUrl, username, password);
+        if (connectionOK) {
+            throw new GlobalException(ResultCodeEnum.DATA_SOURCE_DATABASE_ALREADY_EXISTS);
+        }
+
+        //创建租户库
+        boolean createSuccess = JdbcUtils.createDatabase(url, username, password, dbName);
+        if (!createSuccess) {
+            throw new GlobalException(ResultCodeEnum.DATA_SOURCE_CREATE_DATABASE_ERROR);
+        }
+
+        //存关联关系
+        SystemTenantDataSource tenantDataSource = new SystemTenantDataSource();
+        tenantDataSource.setTenantId(tenant.getId());
+        tenantDataSource.setDataSourceId(dataSourceId);
+        tenantDataSource.setDatabaseName(dbName);
+
+        tenantDataSource.setUrl(databaseUrl);
+        tenantDataSource.setType(1);
+        tenantDataSourceService.saveOrUpdate(tenantDataSource);
+
+        //初始化表结构
+        String filePath = this.getClass().getClassLoader().getResource("sql/init_table.sql").getPath();
+        boolean initSuccess = JdbcUtils.executeSqlFile(filePath, databaseUrl, username, password);
+        if (!initSuccess) {
+            throw new GlobalException(ResultCodeEnum.DATA_SOURCE_INIT_TABLE_STRUCT_ERROR);
+        }
     }
 
     /**

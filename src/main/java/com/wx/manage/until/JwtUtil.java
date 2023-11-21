@@ -86,7 +86,7 @@ public class JwtUtil {
     public static Long getUserId(String token) {
         Claims claims = getClaims(token);
 
-        return (Long)claims.get("userId");
+        return Long.valueOf(claims.get("userId").toString());
     }
 
     /**

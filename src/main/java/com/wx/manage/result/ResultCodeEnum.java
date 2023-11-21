@@ -110,7 +110,14 @@ public enum ResultCodeEnum {
 
     // ========== 数据源配置 1001007000 ==========
     DATA_SOURCE_CONFIG_NOT_EXISTS(1001007000, "数据源配置不存在"),
-    DATA_SOURCE_CONFIG_NOT_OK(1001007001, "数据源配置不正确，无法进行连接"),
+
+    DATA_SOURCE_CONFIG_ALREADY_EXISTS(1001007001, "数据源配置已经存在"),
+    DATA_SOURCE_CONFIG_NOT_OK(1001007002, "数据源配置不正确，无法进行连接"),
+
+    DATA_SOURCE_DATABASE_ALREADY_EXISTS(1001007003, "数据库已经存在"),
+    DATA_SOURCE_CREATE_DATABASE_ERROR(1001007004, "数据源创建库失败"),
+
+    DATA_SOURCE_INIT_TABLE_STRUCT_ERROR(1001007005, "数据源初始化表结构失败"),
 
     // ========== 租户信息 1002015000 ==========
     TENANT_NOT_EXISTS(1002015000, "租户不存在"),
