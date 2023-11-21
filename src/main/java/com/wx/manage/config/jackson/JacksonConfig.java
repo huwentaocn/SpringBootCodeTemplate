@@ -28,18 +28,16 @@ public class JacksonConfig {
         ObjectMapper objectMapper = builder.createXmlMapper(false).build();
         //全局配置序列化返回json处理
         SimpleModule simpleModule = new SimpleModule();
-        //json Long ==>String
+        //json Long ==> String
         simpleModule.addSerializer(Long.class, ToStringSerializer.instance);
+        simpleModule.addSerializer(Long.TYPE, ToStringSerializer.instance);
+
+        //LocalDataTime ==> string类型时间戳
+        simpleModule.addSerializer(LocalDateTime.class, new LocalDateTimeSerializer());
+        simpleModule.addDeserializer(LocalDateTime.class, new LocalDateTimeDeserializer());
+
         objectMapper.registerModule(simpleModule);
         return objectMapper;
-    }
-
-    @Bean
-    public Jackson2ObjectMapperBuilderCustomizer jackson2ObjectMapperBuilderCustomizer() {
-        return builder -> {
-            builder.serializerByType(LocalDateTime.class, new LocalDateTimeSerializer());
-            builder.deserializerByType(LocalDateTime.class, new LocalDateTimeDeserializer());
-        };
     }
 
     /**
@@ -51,7 +49,7 @@ public class JacksonConfig {
                 throws IOException {
             if (value != null) {
                 long timestamp = value.atZone(ZoneId.systemDefault()).toInstant().toEpochMilli();
-                gen.writeNumber(timestamp);
+                gen.writeString(String.valueOf(timestamp));
             }
         }
     }
