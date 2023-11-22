@@ -203,11 +203,21 @@ public class SystemDataSourceServiceImpl extends ServiceImpl<SystemDataSourceMap
     private SystemDataSource buildMasterDataSource() {
         String primary = dynamicDataSourceProperties.getPrimary();
         DataSourceProperty dataSourceProperty = dynamicDataSourceProperties.getDatasource().get(primary);
+
+        String url = dataSourceProperty.getUrl();
+        int i = url.indexOf("//");
+        int i1 = url.indexOf(":", i);
+        int i2 = url.indexOf("/", i + 2);
+
+        String ip = url.substring(i + 2, i1);
+        String port = url.substring(i1 + 1, i2);
+
         return new SystemDataSource().setId(SystemDataSource.ID_MASTER).setName(primary)
-                .setUrl(dataSourceProperty.getUrl())
+                .setUrl(url)
+                .setIp(ip)
+                .setPort(port)
                 .setUsername(dataSourceProperty.getUsername())
                 .setPassword(dataSourceProperty.getPassword());
     }
-
 
 }
