@@ -85,4 +85,11 @@ public interface SystemTenantService extends IService<SystemTenant> {
      * @param id 租户编号
      */
     void validateTenant(Long id);
+
+    /**
+     * 校验租户名称是否存在
+     * @param name
+     * @return
+     */
+    Boolean validateTenantNameIsExist(String name);
 }

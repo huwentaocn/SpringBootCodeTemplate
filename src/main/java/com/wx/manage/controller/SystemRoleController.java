@@ -1,9 +1,13 @@
 package com.wx.manage.controller;
 
+import com.wx.manage.pojo.page.PageResult;
 import com.wx.manage.pojo.req.RoleCreateReq;
+import com.wx.manage.pojo.req.RolePageReq;
 import com.wx.manage.pojo.req.RoleUpdateReq;
+import com.wx.manage.pojo.req.UserPageReq;
 import com.wx.manage.pojo.resp.RoleResp;
 import com.wx.manage.pojo.resp.TenantResp;
+import com.wx.manage.pojo.resp.UserResp;
 import com.wx.manage.result.Result;
 import com.wx.manage.service.SystemRoleService;
 import io.swagger.annotations.Api;
@@ -59,6 +63,12 @@ public class SystemRoleController {
     @ApiOperation(value = "获得角色列表", notes = "获得角色列表")
     public Result<List<RoleResp>> getRoleList() {
         return Result.success(roleService.getRoleList());
+    }
+
+    @GetMapping("/page")
+    @ApiOperation(value = "获得角色列表（分页）", notes = "获得角色列表（分页）")
+    public Result<PageResult<RoleResp>> getRolePage(@Valid RolePageReq pageReq) {
+        return Result.success(roleService.getRolePage(pageReq));
     }
 
 }

@@ -2,9 +2,12 @@ package com.wx.manage.service;
 
 import com.wx.manage.pojo.entity.SystemRole;
 import com.baomidou.mybatisplus.extension.service.IService;
+import com.wx.manage.pojo.page.PageResult;
 import com.wx.manage.pojo.req.RoleCreateReq;
+import com.wx.manage.pojo.req.RolePageReq;
 import com.wx.manage.pojo.req.RoleUpdateReq;
 import com.wx.manage.pojo.resp.RoleResp;
+import com.wx.manage.pojo.resp.UserResp;
 
 import java.util.List;
 
@@ -28,4 +31,5 @@ public interface SystemRoleService extends IService<SystemRole> {
 
     List<RoleResp> getRoleList();
 
+    PageResult<RoleResp> getRolePage(RolePageReq pageReq);
 }

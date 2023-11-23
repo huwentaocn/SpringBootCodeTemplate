@@ -1,9 +1,9 @@
 package com.wx.manage.controller;
 
 import com.wx.manage.pojo.entity.SystemUsers;
-import com.wx.manage.pojo.req.UserCreateReq;
-import com.wx.manage.pojo.req.UserUpdatePasswordReq;
-import com.wx.manage.pojo.req.UserUpdateReq;
+import com.wx.manage.pojo.page.PageResult;
+import com.wx.manage.pojo.req.*;
+import com.wx.manage.pojo.resp.TenantPackageResp;
 import com.wx.manage.pojo.resp.UserResp;
 import com.wx.manage.pojo.resp.UserSimpleResp;
 import com.wx.manage.result.Result;
@@ -69,6 +69,17 @@ public class SystemUsersController {
         return Result.success(usersService.getSimpleUserList());
     }
 
+    @GetMapping("/list")
+    @ApiOperation(value = "获取用户列表", notes = "获取用户列表")
+    public Result<List<UserResp>> getUserList() {
+        return Result.success(usersService.getUserList());
+    }
+
+    @GetMapping("/page")
+    @ApiOperation(value = "获取用户列表（分页）", notes = "获取用户列表（分页）")
+    public Result<PageResult<UserResp>> getUserPage(@Valid UserPageReq pageReq) {
+        return Result.success(usersService.getUserPage(pageReq));
+    }
 
 
 }

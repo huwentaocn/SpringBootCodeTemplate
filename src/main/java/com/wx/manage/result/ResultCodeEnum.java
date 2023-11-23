@@ -138,7 +138,9 @@ public enum ResultCodeEnum {
     TENANT_NOT_EXISTS(1002015000, "租户不存在"),
     TENANT_DISABLE(1002015001, "名字为【{}】的租户已被禁用"),
     TENANT_EXPIRE(1002015002, "名字为【{}】的租户已过期"),
-    TENANT_CAN_NOT_UPDATE_SYSTEM(1002015003, "系统租户不能进行修改、删除等操作！"),
+
+    TENANT_NAME_EXISTS(1002015003, "名字为【{}】的租户已存在"),
+    TENANT_CAN_NOT_UPDATE_SYSTEM(1002015004, "系统租户不能进行修改、删除等操作！"),
 
 
     // ========== 租户套餐 1002016000 ==========

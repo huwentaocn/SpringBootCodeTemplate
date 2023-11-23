@@ -2,7 +2,9 @@ package com.wx.manage.service;
 
 import com.wx.manage.pojo.entity.SystemUsers;
 import com.baomidou.mybatisplus.extension.service.IService;
+import com.wx.manage.pojo.page.PageResult;
 import com.wx.manage.pojo.req.UserCreateReq;
+import com.wx.manage.pojo.req.UserPageReq;
 import com.wx.manage.pojo.req.UserUpdatePasswordReq;
 import com.wx.manage.pojo.req.UserUpdateReq;
 import com.wx.manage.pojo.resp.UserResp;
@@ -42,4 +44,7 @@ public interface SystemUsersService extends IService<SystemUsers> {
      */
     List<UserSimpleResp> getSimpleUserList();
 
+    List<UserResp> getUserList();
+
+    PageResult<UserResp> getUserPage(UserPageReq pageReq);
 }

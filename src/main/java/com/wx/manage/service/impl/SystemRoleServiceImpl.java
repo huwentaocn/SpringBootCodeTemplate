@@ -2,6 +2,7 @@ package com.wx.manage.service.impl;
 
 import cn.hutool.core.util.ObjectUtil;
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
+import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.google.common.annotations.VisibleForTesting;
 import com.wx.manage.config.tenant.aop.TenantDS;
 import com.wx.manage.constant.DataScopeEnum;
@@ -11,9 +12,12 @@ import com.wx.manage.constant.RoleTypeEnum;
 import com.wx.manage.exception.GlobalException;
 import com.wx.manage.pojo.entity.SystemRole;
 import com.wx.manage.mapper.SystemRoleMapper;
+import com.wx.manage.pojo.page.PageResult;
 import com.wx.manage.pojo.req.RoleCreateReq;
+import com.wx.manage.pojo.req.RolePageReq;
 import com.wx.manage.pojo.req.RoleUpdateReq;
 import com.wx.manage.pojo.resp.RoleResp;
+import com.wx.manage.pojo.resp.UserResp;
 import com.wx.manage.result.ResultCodeEnum;
 import com.wx.manage.service.SystemRoleMenuService;
 import com.wx.manage.service.SystemRoleService;
@@ -45,6 +49,9 @@ public class SystemRoleServiceImpl extends ServiceImpl<SystemRoleMapper, SystemR
 
     @Autowired
     private SystemRoleMenuService roleMenuService;
+
+    @Autowired
+    private SystemRoleMapper roleMapper;
 
     @Override
     @Transactional(rollbackFor = Exception.class)
@@ -106,6 +113,25 @@ public class SystemRoleServiceImpl extends ServiceImpl<SystemRoleMapper, SystemR
             BeanUtils.copyProperties(item, roleResp);
             return roleResp;
         }).collect(Collectors.toList());
+    }
+
+    @Override
+    public PageResult<RoleResp> getRolePage(RolePageReq req) {
+        LambdaQueryWrapper<SystemRole> queryWrapper = new LambdaQueryWrapper<>();
+        queryWrapper.like(StringUtils.isNotBlank(req.getName()), SystemRole::getName, req.getName())
+                .like(StringUtils.isNotBlank(req.getCode()), SystemRole::getCode, req.getCode())
+//                .between(req.getCreateTime() != null, SystemTenant::getCreateTime, req.getCreateTime()[0], req.getCreateTime()[1])
+                .eq(req.getStatus() != null, SystemRole::getStatus, req.getStatus())
+                .orderByDesc(SystemRole::getId);
+        Page<SystemRole> page = new Page<>(req.getPageNo(), req.getPageSize());
+        Page<SystemRole> systemRolePage = roleMapper.selectPage(page, queryWrapper);
+        List<RoleResp> roleRespList = systemRolePage.getRecords().stream().map(item -> {
+            RoleResp roleResp = new RoleResp();
+            BeanUtils.copyProperties(item, roleResp);
+            return roleResp;
+        }).collect(Collectors.toList());
+
+        return new PageResult<>(systemRolePage, roleRespList);
     }
 
 

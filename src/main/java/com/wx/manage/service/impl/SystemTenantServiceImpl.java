@@ -96,6 +96,9 @@ public class SystemTenantServiceImpl extends ServiceImpl<SystemTenantMapper, Sys
         LambdaQueryWrapper<SystemTenant> queryWrapper = new LambdaQueryWrapper<>();
         queryWrapper.eq(SystemTenant::getName, name);
         SystemTenant systemTenant = getOne(queryWrapper);
+        if (systemTenant == null) {
+            return null;
+        }
 
         TenantResp tenantResp = new TenantResp();
         BeanUtils.copyProperties(systemTenant, tenantResp);
@@ -179,6 +182,12 @@ public class SystemTenantServiceImpl extends ServiceImpl<SystemTenantMapper, Sys
     @Override
     @DSTransactional // 多数据源，使用 @DSTransactional 保证本地事务，以及数据源的切换
     public Long createTenant(TenantCreateReq createReq) {
+        //校验租户名称是否已经存在
+        TenantResp tenantByName = getTenantByName(createReq.getName());
+        if (tenantByName != null) {
+            throw new GlobalException(ResultCodeEnum.TENANT_NAME_EXISTS, createReq.getName());
+        }
+
         // 校验套餐被禁用
         SystemTenantPackage tenantPackage = tenantPackageService.validTenantPackage(createReq.getPackageId());
 
@@ -295,6 +304,13 @@ public class SystemTenantServiceImpl extends ServiceImpl<SystemTenantMapper, Sys
     public Boolean updateTenant(TenantUpdateReq updateReq) {
         // 校验存在
         SystemTenant tenant = validateUpdateTenant(updateReq.getId());
+
+        //校验租户名称是否已经存在
+        TenantResp tenantByName = getTenantByName(updateReq.getName());
+        if (tenantByName != null && !tenant.getId().equals(tenantByName.getId())) {
+            throw new GlobalException(ResultCodeEnum.TENANT_NAME_EXISTS, updateReq.getName());
+        }
+
         // 校验套餐被禁用
         SystemTenantPackage tenantPackage = tenantPackageService.validTenantPackage(updateReq.getPackageId());
 
@@ -312,6 +328,10 @@ public class SystemTenantServiceImpl extends ServiceImpl<SystemTenantMapper, Sys
     public Boolean deleteTenant(Long id) {
         // 校验存在
         validateUpdateTenant(id);
+
+        //删除数据源关联关系
+        tenantDataSourceService.removeTenantDataSourceByTenantId(id);
+
         // 删除
         return removeById(id);
     }
@@ -477,6 +497,20 @@ public class SystemTenantServiceImpl extends ServiceImpl<SystemTenantMapper, Sys
         if (DateUtils.isExpired(tenant.getExpireTime())) {
             throw new GlobalException(ResultCodeEnum.TENANT_EXPIRE, tenant.getName());
         }
+    }
+
+    /**
+     * 校验租户名称是否已存在
+     * @param name
+     * @return
+     */
+    @Override
+    public Boolean validateTenantNameIsExist(String name) {
+        LambdaQueryWrapper<SystemTenant> queryWrapper = new LambdaQueryWrapper<>();
+        queryWrapper.eq(StringUtils.isNotBlank(name), SystemTenant::getName, name);
+        SystemTenant tenant = getOne(queryWrapper);
+
+        return tenant != null;
     }
 
     private boolean isTenantDisable() {

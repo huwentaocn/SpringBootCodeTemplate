@@ -63,7 +63,7 @@ public class SystemTenantPackageController {
 
     @GetMapping("/list")
     @ApiOperation(value = "获得租户套餐列表", notes = "获得租户套餐列表")
-    public Result<List<TenantPackageResp>> getTenantPackageList(@RequestParam("status") Integer status) {
+    public Result<List<TenantPackageResp>> getTenantPackageList(@RequestParam(value = "status", required = false) Integer status) {
         return Result.success(tenantPackageService.getTenantPackageList(status));
     }
 

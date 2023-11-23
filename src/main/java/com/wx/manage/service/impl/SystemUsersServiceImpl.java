@@ -4,13 +4,19 @@ import cn.hutool.core.util.StrUtil;
 import com.baomidou.dynamic.datasource.annotation.DSTransactional;
 import com.baomidou.dynamic.datasource.annotation.Master;
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
+import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
+import com.wx.manage.config.tenant.aop.TenantDS;
 import com.wx.manage.constant.EnableStatusEnum;
 import com.wx.manage.exception.GlobalException;
+import com.wx.manage.pojo.entity.SystemTenant;
 import com.wx.manage.pojo.entity.SystemUsers;
 import com.wx.manage.mapper.SystemUsersMapper;
+import com.wx.manage.pojo.page.PageResult;
 import com.wx.manage.pojo.req.UserCreateReq;
+import com.wx.manage.pojo.req.UserPageReq;
 import com.wx.manage.pojo.req.UserUpdatePasswordReq;
 import com.wx.manage.pojo.req.UserUpdateReq;
+import com.wx.manage.pojo.resp.TenantResp;
 import com.wx.manage.pojo.resp.UserResp;
 import com.wx.manage.pojo.resp.UserSimpleResp;
 import com.wx.manage.result.ResultCodeEnum;
@@ -18,6 +24,7 @@ import com.wx.manage.service.SystemTenantService;
 import com.wx.manage.service.SystemUserRoleService;
 import com.wx.manage.service.SystemUsersService;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
+import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -36,6 +43,7 @@ import java.util.stream.Collectors;
  * @since 2023-11-07
  */
 @Service
+@TenantDS
 public class SystemUsersServiceImpl extends ServiceImpl<SystemUsersMapper, SystemUsers> implements SystemUsersService {
 
     @Autowired
@@ -43,6 +51,9 @@ public class SystemUsersServiceImpl extends ServiceImpl<SystemUsersMapper, Syste
 
     @Autowired
     private SystemUserRoleService userRoleService;
+
+    @Autowired
+    private SystemUsersMapper usersMapper;
 
     /**
      * 更新用户登录数据
@@ -159,6 +170,38 @@ public class SystemUsersServiceImpl extends ServiceImpl<SystemUsersMapper, Syste
             return userSimpleResp;
         }).collect(Collectors.toList());
         return userSimpleRespList;
+    }
+
+    @Override
+    public List<UserResp> getUserList() {
+        List<SystemUsers> usersList = list();
+
+        return usersList.stream().map(item -> {
+            UserResp userResp = new UserResp();
+            BeanUtils.copyProperties(item, userResp);
+            return userResp;
+        }).collect(Collectors.toList());
+    }
+
+    @Override
+    public PageResult<UserResp> getUserPage(UserPageReq req) {
+        LambdaQueryWrapper<SystemUsers> queryWrapper = new LambdaQueryWrapper<>();
+        queryWrapper.like(StringUtils.isNotBlank(req.getUsername()), SystemUsers::getUsername, req.getUsername())
+                .like(StringUtils.isNotBlank(req.getMobile()), SystemUsers::getMobile, req.getMobile())
+                .eq(req.getStatus() != null, SystemUsers::getStatus, req.getStatus())
+//                .between(req.getCreateTime() != null, SystemTenant::getCreateTime, req.getCreateTime()[0], req.getCreateTime()[1])
+                .eq(req.getDeptId() != null, SystemUsers::getDeptId, req.getDeptId())
+                .orderByDesc(SystemUsers::getId);
+
+        Page<SystemUsers> page = new Page<>(req.getPageNo(), req.getPageSize());
+        Page<SystemUsers> systemUsersPage = usersMapper.selectPage(page, queryWrapper);
+        List<UserResp> userRespList = systemUsersPage.getRecords().stream().map(item -> {
+            UserResp userResp = new UserResp();
+            BeanUtils.copyProperties(item, userResp);
+            return userResp;
+        }).collect(Collectors.toList());
+
+        return new PageResult<>(systemUsersPage, userRespList);
     }
 
     /**

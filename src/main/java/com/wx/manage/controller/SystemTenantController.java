@@ -43,6 +43,11 @@ public class SystemTenantController {
         return Result.success(tenantService.getTenantByName(name));
     }
 
+    @GetMapping("/validate/tenant/name/is/exist")
+    @ApiOperation(value = "校验租户名称是否已存在", notes = "校验租户名称是否已存在")
+    public Result<Boolean> validateTenantNameIsExist(@RequestParam("name") String name) {
+        return Result.success(tenantService.validateTenantNameIsExist(name));
+    }
 
     @PostMapping("/create")
     @ApiOperation(value = "创建租户", notes = "创建租户")

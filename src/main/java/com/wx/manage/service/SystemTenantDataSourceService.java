@@ -13,4 +13,12 @@ import com.baomidou.mybatisplus.extension.service.IService;
  */
 public interface SystemTenantDataSourceService extends IService<SystemTenantDataSource> {
 
+
+    /**
+     * 删除指定租户的数据源关联关系
+     * @param tenantId
+     * @return
+     */
+    Boolean removeTenantDataSourceByTenantId(Long tenantId);
+
 }

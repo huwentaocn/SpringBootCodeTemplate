@@ -139,7 +139,7 @@ public class SystemDataSourceServiceImpl extends ServiceImpl<SystemDataSourceMap
     public List<DataSourceResp> getDataSourceList() {
         List<SystemDataSource> list = list();
         // 补充 master 数据源
-        list.add(0, buildMasterDataSource());
+//        list.add(0, buildMasterDataSource());
 
         return list.stream().map(item -> {
             DataSourceResp resp = new DataSourceResp();
