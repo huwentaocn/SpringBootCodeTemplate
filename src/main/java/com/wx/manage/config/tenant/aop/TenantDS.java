@@ -20,6 +20,6 @@ public @interface TenantDS {
     /**
      * 租户对应的数据源的占位符
      */
-    String KEY = "hasProperty(#context, 'tenantId') ? #context.tenantId : ''";
+    String KEY = "#context?.tenantId != null ? #context.tenantId : ''";
 
 }
