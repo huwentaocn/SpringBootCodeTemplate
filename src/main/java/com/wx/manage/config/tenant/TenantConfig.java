@@ -14,6 +14,7 @@ import org.springframework.boot.autoconfigure.AutoConfiguration;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
 import org.springframework.boot.context.properties.EnableConfigurationProperties;
 import org.springframework.context.annotation.Bean;
+import org.springframework.context.annotation.Configuration;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -24,8 +25,8 @@ import java.util.List;
  * @Author Hu Wentao
  */
 
-@AutoConfiguration
-@ConditionalOnProperty(prefix = "sbct.tenant", value = "enable", matchIfMissing = true) // 允许使用 yudao.tenant.enable=false 禁用多租户
+@Configuration
+@ConditionalOnProperty(prefix = "sbct.tenant", value = "enable", matchIfMissing = true) // 允许使用 sbct.tenant.enable=false 禁用多租户
 @EnableConfigurationProperties(TenantProperties.class)
 public class TenantConfig {
 

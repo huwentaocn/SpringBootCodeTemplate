@@ -69,8 +69,6 @@ public class AuthServiceImpl implements AuthService {
 
     @Override
     public AuthLoginResp login(AuthLoginReq req, HttpServletRequest request) {
-        //获取租户id
-        Long tenantId = JwtUtil.getHeaderTenantId(request);
         // 使用账号密码，进行登录
         SystemUsers user = authenticate(req.getUsername(), req.getPassword());
 //
@@ -80,15 +78,15 @@ public class AuthServiceImpl implements AuthService {
 //                    reqVO.getSocialType(), reqVO.getSocialCode(), reqVO.getSocialState()));
 //        }
         // 创建 Token 令牌，记录登录日志
-        return createTokenAfterLoginSuccess(tenantId, user, LoginLogTypeEnum.LOGIN_USERNAME);
+        return createTokenAfterLoginSuccess(UserTypeEnum.ADMIN, user, LoginLogTypeEnum.LOGIN_USERNAME);
     }
 
-    private AuthLoginResp createTokenAfterLoginSuccess(Long tenantId, SystemUsers user, LoginLogTypeEnum logType) {
+    private AuthLoginResp createTokenAfterLoginSuccess(UserTypeEnum userTypeEnum, SystemUsers user, LoginLogTypeEnum logType) {
         Long userId = user.getId();
         String username = user.getUsername();
         String nickname = user.getNickname();
         // 插入登陆日志
-        systemLoginLogService.createLoginLog(userId, username, UserTypeEnum.ADMIN, logType, LoginResultEnum.SUCCESS);
+        systemLoginLogService.createLoginLog(userId, username, userTypeEnum, logType, LoginResultEnum.SUCCESS);
         // 创建访问令牌
 //        OAuth2AccessTokenDO accessTokenDO = oauth2TokenService.createAccessToken(userId, getUserType().getValue(),
 //                OAuth2ClientConstants.CLIENT_ID_DEFAULT, null);
@@ -96,7 +94,7 @@ public class AuthServiceImpl implements AuthService {
 //        return AuthConvert.INSTANCE.convert(accessTokenDO);
 
         //生成token
-        String token = JwtUtil.createToken(userId, username, tenantId);
+        String token = JwtUtil.createToken(userId, username, userTypeEnum.getCode());
 
         AuthLoginResp authLoginResp = new AuthLoginResp();
         authLoginResp.setUserId(userId);
@@ -108,7 +106,7 @@ public class AuthServiceImpl implements AuthService {
         userInfoVo.setNickName(nickname);
 
         //获取当前登录用户信息，放到Redis里面，设置有效时间
-        redisTemplate.opsForValue().set(RedisConstant.getTenantUserInfoKey(tenantId, userInfoVo.getId()), userInfoVo, RedisConstant.USER_KEY_TIMEOUT, TimeUnit.DAYS);
+        redisTemplate.opsForValue().set(RedisConstant.getTenantUserInfoKey(userTypeEnum.getCode(), userInfoVo.getId()), userInfoVo, RedisConstant.USER_KEY_TIMEOUT, TimeUnit.DAYS);
 
 
         return authLoginResp;

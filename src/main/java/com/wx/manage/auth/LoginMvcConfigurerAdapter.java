@@ -1,5 +1,8 @@
 package com.wx.manage.auth;
 
+import com.wx.manage.config.tenant.TenantContextHolder;
+import com.wx.manage.constant.HeaderConstant;
+import org.apache.commons.lang3.StringUtils;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.web.servlet.config.annotation.InterceptorRegistry;
@@ -49,7 +52,7 @@ public class LoginMvcConfigurerAdapter implements WebMvcConfigurer {
 
         registry.addInterceptor(new UserLoginInterceptor(redisTemplate))
                 .addPathPatterns("/**")
-                .excludePathPatterns(passPathList.toArray(new String[0]))
+//                .excludePathPatterns(passPathList.toArray(new String[0]))
         ;
     }
 }

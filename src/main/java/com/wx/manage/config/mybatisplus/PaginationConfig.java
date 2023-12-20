@@ -18,7 +18,7 @@ import org.springframework.context.annotation.Configuration;
 public class PaginationConfig {
 
     @Bean
-    public MybatisPlusInterceptor myBatisPlusInterceptor(TenantProperties properties) {
+    public MybatisPlusInterceptor myBatisPlusInterceptor() {
 
         MybatisPlusInterceptor interceptor = new MybatisPlusInterceptor();
         //添加分页插件

@@ -1,6 +1,5 @@
 package com.wx.manage.until;
 
-import com.wx.manage.config.tenant.TenantContextHolder;
 import com.wx.manage.constant.HeaderConstant;
 import com.wx.manage.exception.GlobalException;
 import com.wx.manage.result.ResultCodeEnum;
@@ -31,13 +30,13 @@ public class JwtUtil {
         return new SecretKeySpec(bytes,signatureAlgorithm.getJcaName());
     }
 
-    public static String createToken(Long userId, String userName, Long tenantId) {
+    public static String createToken(Long userId, String userName, Integer userType) {
         String token = Jwts.builder()
                 .setSubject("wx-manage")
                 .setExpiration(new Date(System.currentTimeMillis() + TOKEN_EXPIRATION))
                 .claim("userId", userId)
                 .claim("userName", userName)
-                .claim("tenantId", tenantId)
+                .claim("userType", userType)
                 .signWith(SignatureAlgorithm.HS512, getKeyInstance())
                 .compressWith(CompressionCodecs.GZIP)
                 .compact();
@@ -87,22 +86,6 @@ public class JwtUtil {
         Claims claims = getClaims(token);
 
         return Long.valueOf(claims.get("userId").toString());
-    }
-
-    /**
-     * 获取请求头中传的tenantId
-     * @param request
-     * @return
-     */
-    public static Long getHeaderTenantId(HttpServletRequest request) {
-        String tenantIdStr = request.getHeader(HeaderConstant.HEADER_TENANT_ID);
-        if (StringUtils.isBlank(tenantIdStr)) {
-            throw new GlobalException(ResultCodeEnum.PARAM_FAIL, "租户id未传");
-        }
-        Long tenantId = Long.valueOf(tenantIdStr);
-        TenantContextHolder.setTenantId(tenantId);
-
-        return tenantId;
     }
 
     /**

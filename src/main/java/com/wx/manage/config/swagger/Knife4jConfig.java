@@ -34,9 +34,9 @@ public class Knife4jConfig {
         authorizationPar.name(HeaderConstant.AUTHORIZATION).description("令牌").modelRef(new ModelRef("String")).parameterType("header").required(true).build();
         pars.add(authorizationPar.build());
         //tenantId
-        ParameterBuilder tenantIdPar = new ParameterBuilder();
-        tenantIdPar.name(HeaderConstant.HEADER_TENANT_ID).description("租户id").modelRef(new ModelRef("String")).parameterType("header").required(true).build();
-        pars.add(tenantIdPar.build());
+//        ParameterBuilder tenantIdPar = new ParameterBuilder();
+//        tenantIdPar.name(HeaderConstant.HEADER_TENANT_ID).description("租户id").modelRef(new ModelRef("String")).parameterType("header").required(true).build();
+//        pars.add(tenantIdPar.build());
         return new Docket(DocumentationType.SWAGGER_2)
                 .apiInfo(new ApiInfoBuilder()
                         //设置文档的标题

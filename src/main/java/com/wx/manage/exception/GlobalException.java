@@ -1,6 +1,7 @@
 package com.wx.manage.exception;
 
 import com.google.common.annotations.VisibleForTesting;
+import com.wx.manage.result.Result;
 import com.wx.manage.result.ResultCodeEnum;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
@@ -47,6 +48,11 @@ public class GlobalException extends RuntimeException {
     public GlobalException(ResultCodeEnum resultCodeEnum){
         this.code = resultCodeEnum.getCode();
         this.msg = resultCodeEnum.getMessage();
+    }
+
+    public GlobalException(ResultCodeEnum codeEnum, String errorMessage){
+        this.code = codeEnum.getCode();
+        this.msg = codeEnum.getMessage() + "==>" + errorMessage;
     }
 
     /**

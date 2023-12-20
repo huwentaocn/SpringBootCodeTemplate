@@ -100,7 +100,7 @@ wechat:
 sbct:
   databaseUrlTemplate: jdbc:mysql://ip:port?useUnicode=true&characterEncoding=UTF-8&useSSL=false&useTimezone=true&serverTimezone=GMT%2B8&allowPublicKeyRetrieval=true
   tenant: # 多租户相关配置项
-    enable: true
+    enable: false
     ignore-urls:
       - /admin-api/system/tenant/get-id-by-name # 基于名字获取租户，不许带租户编号
       - /admin-api/system/captcha/get # 获取图片验证码，和租户无关

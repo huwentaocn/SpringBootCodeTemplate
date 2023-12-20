@@ -105,7 +105,6 @@ public class SystemTenantServiceImpl extends ServiceImpl<SystemTenantMapper, Sys
         return tenantResp;
     }
 
-    //TODO 明天要适配这个方法，改为用新的那套逻辑
     @Override
     @SneakyThrows
     public DataSourceProperty getDataSourceProperty(Long id) {
@@ -133,7 +132,7 @@ public class SystemTenantServiceImpl extends ServiceImpl<SystemTenantMapper, Sys
         return dataSourceProperty;
     }
 
-//    //TODO 明天要适配这个方法，改为用新的那套逻辑
+    //旧方法
 //    @Override
 //    @SneakyThrows
 //    public DataSourceProperty getDataSourceProperty(Long id) {
@@ -513,7 +512,8 @@ public class SystemTenantServiceImpl extends ServiceImpl<SystemTenantMapper, Sys
         return tenant != null;
     }
 
-    private boolean isTenantDisable() {
+    @Override
+    public Boolean isTenantDisable() {
         return tenantProperties == null || Boolean.FALSE.equals(tenantProperties.getEnable());
     }
 

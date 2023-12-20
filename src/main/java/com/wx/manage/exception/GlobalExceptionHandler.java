@@ -48,7 +48,7 @@ public class GlobalExceptionHandler<T> {
     @ExceptionHandler(value = {GlobalException.class})
     public Result<T> customHandleException(HttpServletRequest request, GlobalException e) {
         String method = request.getRequestURI();
-        log.error(" method: " + method + " ====> 触发自定义异常！原因是:{}"+ e.getMsg());
+        log.error(" method: " + method + " ====> 触发自定义异常！原因是:{}", e.getMsg());
         return Result.fail(e.getCode(), e.getMsg());
     }
 
@@ -82,7 +82,7 @@ public class GlobalExceptionHandler<T> {
     @ExceptionHandler(value = IllegalArgumentException.class)
     public Result<T> handleIllegalArgumentException(HttpServletRequest request, IllegalArgumentException e) {
         String method = request.getRequestURI();
-        log.error(" method: " + method + " ====> 触发数据异常！原因是:{}"+ e);
+        log.error(" method: " + method + " ====> 触发数据异常！原因是:{}", e);
         return Result.fail(ResultCodeEnum.ILLEGAL_ARGUMENT_EXCEPTION);
     }
 

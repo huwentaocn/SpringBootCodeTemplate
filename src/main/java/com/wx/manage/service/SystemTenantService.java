@@ -92,4 +92,12 @@ public interface SystemTenantService extends IService<SystemTenant> {
      * @return
      */
     Boolean validateTenantNameIsExist(String name);
+
+
+    /**
+     * 是否禁用租户
+     * @return
+     */
+    Boolean isTenantDisable();
+
 }
