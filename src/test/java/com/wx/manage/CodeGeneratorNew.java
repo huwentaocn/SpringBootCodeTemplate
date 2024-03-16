@@ -73,7 +73,7 @@ public class CodeGeneratorNew {
                 .strategyConfig(builder -> {
                     builder
                             //entity配置策略
-                            .addInclude("wx_project")
+                            .addInclude("user")
                             .entityBuilder()
                             .enableLombok()
                             .idType(IdType.ASSIGN_ID) //id策略，雪花算法
@@ -82,7 +82,7 @@ public class CodeGeneratorNew {
 //                            .enableRemoveIsPrefix() //开启 Boolean 类型字段移除 is 前缀
                             .versionColumnName("version") //乐观锁字段名(数据库)
                             .versionPropertyName("version") //乐观锁属性名(实体)
-                            .logicDeleteColumnName("is_deleted") //逻辑删除字段名(数据库)
+                            .logicDeleteColumnName("deleted") //逻辑删除字段名(数据库)
                             .logicDeletePropertyName("")// 逻辑删除属性名(实体)
                             .addTableFills(new Property("creator", FieldFill.INSERT))
                             .addTableFills(new Property("createTime", FieldFill.INSERT))

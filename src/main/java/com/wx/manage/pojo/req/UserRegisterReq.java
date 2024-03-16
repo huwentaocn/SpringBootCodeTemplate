@@ -7,6 +7,7 @@ import lombok.Data;
 
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
+import java.time.LocalDateTime;
 
 /**
  * @Description 注册请求体
@@ -30,21 +31,26 @@ public class UserRegisterReq {
     @ApiModelProperty("密码")
     private String password;
 
-    @NotNull(message = "性别不能为空")
-    @ApiModelProperty("性别：1男，2女，默认1")
+    @ApiModelProperty("昵称")
+    private String name;
+
+    @ApiModelProperty("性别：1男，2女， 默认1")
     private Integer sex;
 
-    @ApiModelProperty("昵称")
-    private String nickName;
+    @ApiModelProperty("头像id")
+    private String headResourceId;
 
-    @ApiModelProperty("微信openid")
-    private String openId;
+    @ApiModelProperty("账号状态（0正常，1停用），默认0")
+    private Integer status;
 
-    @ApiModelProperty("年龄")
-    private Integer age;
+    @ApiModelProperty("电话号码")
+    private String mobile;
 
-    @ApiModelProperty("头像")
-    private String headUrl;
+    @ApiModelProperty("邮箱")
+    private String email;
+
+    @ApiModelProperty("备注")
+    private String remark;
 
 
 }

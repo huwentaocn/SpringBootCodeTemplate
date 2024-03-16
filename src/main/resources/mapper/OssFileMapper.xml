@@ -12,7 +12,8 @@
         <result column="location" property="location" />
         <result column="acc_location" property="accLocation" />
         <result column="use_count" property="useCount" />
-        <result column="id_delete" property="idDelete" />
+        <result column="deleted" property="deleted" />
+        <result column="version" property="version" />
         <result column="creator" property="creator" />
         <result column="create_time" property="createTime" />
         <result column="updater" property="updater" />
@@ -21,7 +22,7 @@
 
     <!-- 通用查询结果列 -->
     <sql id="Base_Column_List">
-        id, md5, file_name, file_type, file_size, location, acc_location, use_count, id_delete, creator, create_time, updater, update_time
+        id, md5, file_name, file_type, file_size, location, acc_location, use_count, deleted, version, creator, create_time, updater, update_time
     </sql>
 
 </mapper>

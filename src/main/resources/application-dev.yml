@@ -12,9 +12,9 @@ spring:
   datasource: # mysql数据库连接
     type: com.zaxxer.hikari.HikariDataSource
     driver-class-name: com.mysql.cj.jdbc.Driver
-    url: jdbc:mysql://127.0.0.1:3306/wx_wechat?useUnicode=true&characterEncoding=UTF-8&useSSL=false&useTimezone=true&serverTimezone=GMT%2B8&allowPublicKeyRetrieval=true
-    username: #数据库用户名
-    password: #数据库密码
+    url: jdbc:mysql://127.0.0.1:3306/wx_manage?useUnicode=true&characterEncoding=UTF-8&useSSL=false&useTimezone=true&serverTimezone=GMT%2B8&allowPublicKeyRetrieval=true
+    username: root #数据库用户名
+    password: 123456 #数据库密码
 
   jackson:
     date-format: yyyy-MM-dd HH:mm:ss #设置全局的日期格式为年月日时分秒

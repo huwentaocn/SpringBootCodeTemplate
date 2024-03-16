@@ -53,6 +53,8 @@ public enum ResultCodeEnum {
 
     SMS_CODE_ERROR(-4005, "短信验证码错误"),
 
+    LOGIN_TYPE_NOT_OPENED_ERROR(-4006, "暂未开通此登录方式"),
+
 
     /**
      * 代码异常：-4001 ~ 4999

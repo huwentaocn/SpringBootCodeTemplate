@@ -16,7 +16,7 @@ import lombok.Setter;
 
 /**
  * <p>
- * oss文件表
+ * 角色-菜单表
  * </p>
  *
  * @author Hu Wentao
@@ -24,9 +24,9 @@ import lombok.Setter;
  */
 @Getter
 @Setter
-@TableName("oss_file")
-@ApiModel(value = "OssFile对象", description = "oss文件表")
-public class OssFile implements Serializable {
+@TableName("user_role")
+@ApiModel(value = "UserRole对象", description = "角色-菜单表")
+public class UserRole implements Serializable {
 
     private static final long serialVersionUID = 1L;
 
@@ -34,43 +34,27 @@ public class OssFile implements Serializable {
     @TableId(value = "id", type = IdType.ASSIGN_ID)
     private Long id;
 
-    @ApiModelProperty("文件md5")
-    @TableField("md5")
-    private String md5;
+    @ApiModelProperty("用户id")
+    @TableField("user_id")
+    private Long userId;
 
-    @ApiModelProperty("文件名称")
-    @TableField("file_name")
-    private String fileName;
+    @ApiModelProperty("角色id")
+    @TableField("role_id")
+    private Long roleId;
 
-    @ApiModelProperty("文件类型")
-    @TableField("file_type")
-    private String fileType;
+    @ApiModelProperty("排序")
+    @TableField("sort")
+    private Integer sort;
 
-    @ApiModelProperty("文件大小")
-    @TableField("file_size")
-    private Long fileSize;
-
-    @ApiModelProperty("文件存储地址")
-    @TableField("location")
-    private String location;
-
-    @ApiModelProperty("文件访问地址")
-    @TableField("acc_location")
-    private String accLocation;
-
-    @ApiModelProperty("使用计数：默认1")
-    @TableField("use_count")
-    private Integer useCount;
+    @ApiModelProperty("版本号，默认0")
+    @TableField("version")
+    @Version
+    private String version;
 
     @ApiModelProperty("逻辑删除：0未删除，1已删除，默认0")
     @TableField("deleted")
     @TableLogic
-    private Integer deleted;
-
-    @ApiModelProperty("版本")
-    @TableField("version")
-    @Version
-    private Integer version;
+    private String deleted;
 
     @ApiModelProperty("创建者")
     @TableField(value = "creator", fill = FieldFill.INSERT)

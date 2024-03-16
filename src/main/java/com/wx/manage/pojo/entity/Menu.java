@@ -16,7 +16,7 @@ import lombok.Setter;
 
 /**
  * <p>
- * oss文件表
+ * 菜单表
  * </p>
  *
  * @author Hu Wentao
@@ -24,9 +24,9 @@ import lombok.Setter;
  */
 @Getter
 @Setter
-@TableName("oss_file")
-@ApiModel(value = "OssFile对象", description = "oss文件表")
-public class OssFile implements Serializable {
+@TableName("menu")
+@ApiModel(value = "Menu对象", description = "菜单表")
+public class Menu implements Serializable {
 
     private static final long serialVersionUID = 1L;
 
@@ -34,43 +34,51 @@ public class OssFile implements Serializable {
     @TableId(value = "id", type = IdType.ASSIGN_ID)
     private Long id;
 
-    @ApiModelProperty("文件md5")
-    @TableField("md5")
-    private String md5;
+    @ApiModelProperty("菜单名称")
+    @TableField("name")
+    private String name;
 
-    @ApiModelProperty("文件名称")
-    @TableField("file_name")
-    private String fileName;
+    @ApiModelProperty("菜单类型（0目录，1菜单，2按钮）")
+    @TableField("type")
+    private Integer type;
 
-    @ApiModelProperty("文件类型")
-    @TableField("file_type")
-    private String fileType;
+    @ApiModelProperty("父级id")
+    @TableField("parent_id")
+    private Long parentId;
 
-    @ApiModelProperty("文件大小")
-    @TableField("file_size")
-    private Long fileSize;
+    @ApiModelProperty("路由地址")
+    @TableField("path")
+    private String path;
 
-    @ApiModelProperty("文件存储地址")
-    @TableField("location")
-    private String location;
+    @ApiModelProperty("菜单图标")
+    @TableField("icon")
+    private String icon;
 
-    @ApiModelProperty("文件访问地址")
-    @TableField("acc_location")
-    private String accLocation;
+    @ApiModelProperty("组件路径")
+    @TableField("component")
+    private String component;
 
-    @ApiModelProperty("使用计数：默认1")
-    @TableField("use_count")
-    private Integer useCount;
+    @ApiModelProperty("组件名称")
+    @TableField("component_name")
+    private String componentName;
 
-    @ApiModelProperty("逻辑删除：0未删除，1已删除，默认0")
-    @TableField("deleted")
-    @TableLogic
-    private Integer deleted;
+    @ApiModelProperty("菜单状态：0正常，1隐藏，默认0")
+    @TableField("status")
+    private Integer status;
 
-    @ApiModelProperty("版本")
+    @ApiModelProperty("排序")
+    @TableField("sort")
+    private Integer sort;
+
+    @ApiModelProperty("版本号")
     @TableField("version")
     @Version
     private Integer version;
+
+    @ApiModelProperty("逻辑删除：0正常，1删除，默认0")
+    @TableField("deleted")
+    @TableLogic
+    private String deleted;
 
     @ApiModelProperty("创建者")
     @TableField(value = "creator", fill = FieldFill.INSERT)

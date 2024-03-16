@@ -35,7 +35,7 @@ public class LoginMvcConfigurerAdapter implements WebMvcConfigurer {
         //放行短信
         add("/**/sms/**");
 
-        add("/**/login/**");
+        add("/**/hero/**");
     }};
 
     @Override

@@ -45,4 +45,15 @@ public class GlobalException extends RuntimeException {
         this.code = resultCodeEnum.getCode();
         this.msg = resultCodeEnum.getMessage();
     }
+
+
+    /**
+     * 返回指定code码，详细错误信息
+     * @param codeEnum
+     * @param errorMessage
+     */
+    public GlobalException(ResultCodeEnum codeEnum, String errorMessage){
+        this.code = codeEnum.getCode();
+        this.msg = codeEnum.getMessage() + "==>" + errorMessage;
+    }
 }

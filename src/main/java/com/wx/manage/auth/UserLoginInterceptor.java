@@ -31,14 +31,13 @@ public class UserLoginInterceptor implements HandlerInterceptor {
     public boolean preHandle(HttpServletRequest request,
                              HttpServletResponse response,
                              Object handler) throws Exception {
-        //获取用户信息
-        UserInfoVo userInfo = this.getUserInfo(request);
-
-        //拿不到用户信息，返回
-        if (userInfo == null) {
+        //从请求头获取token
+        String token = request.getHeader(TokenConstant.AUTHORIZATION);
+        if (!JwtUtil.checkToken(token)) {
             throw new GlobalException(ResultCodeEnum.LOGIN_AUTH);
         }
-
+        //将userId放入上下文
+        AuthContextHolder.setUserId(JwtUtil.getUserId(token));
         return true;
     }
 
@@ -46,26 +45,5 @@ public class UserLoginInterceptor implements HandlerInterceptor {
     public void postHandle(HttpServletRequest request, HttpServletResponse response, Object handler, ModelAndView modelAndView) throws Exception {
         // 在请求处理之后执行的逻辑
         System.out.println("Interceptor: postHandle");
-    }
-
-    private UserInfoVo getUserInfo(HttpServletRequest request) {
-        //从请求头获取token
-        String token = request.getHeader(TokenConstant.AUTHORIZATION);
-
-        UserInfoVo userInfoVo = null;
-        //判断token不为空
-        if(StringUtils.isNotBlank(token)) {
-            //从token获取userId
-            Long userId = JwtUtil.getUserId(token);
-            //根据userId到Redis获取用户信息
-            userInfoVo = (UserInfoVo)redisTemplate.opsForValue()
-                    .get(RedisConstant.getUserInfoKey(userId));
-            //获取数据放到ThreadLocal里面
-            if(userInfoVo != null) {
-                AuthContextHolder.setUserId(userInfoVo.getId());
-                AuthContextHolder.setUserInfoVo(userInfoVo);
-            }
-        }
-        return userInfoVo;
     }
 }
