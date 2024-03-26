@@ -1,7 +1,7 @@
 server:
   port: 9000
   servlet:
-    context-path: /manage
+    context-path: /sbct
   encoding:
     charset: UTF-8
     enabled: true
@@ -12,7 +12,7 @@ spring:
   datasource: # mysql数据库连接
     type: com.zaxxer.hikari.HikariDataSource
     driver-class-name: com.mysql.cj.jdbc.Driver
-    url: jdbc:mysql://127.0.0.1:3306/wx_manage?useUnicode=true&characterEncoding=UTF-8&useSSL=false&useTimezone=true&serverTimezone=GMT%2B8&allowPublicKeyRetrieval=true
+    url: jdbc:mysql://127.0.0.1:3306/sbct-master?useUnicode=true&characterEncoding=UTF-8&useSSL=false&useTimezone=true&serverTimezone=GMT%2B8&allowPublicKeyRetrieval=true
     username: root #数据库用户名
     password: 123456 #数据库密码
 
