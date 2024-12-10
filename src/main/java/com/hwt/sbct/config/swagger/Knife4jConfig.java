@@ -35,7 +35,7 @@ public class Knife4jConfig {
         return new Docket(DocumentationType.SWAGGER_2)
                 .apiInfo(new ApiInfoBuilder()
                         //设置文档的标题
-                        .title("文香管理平台-API文档")
+                        .title("管理平台-API文档")
                         //设置文档的License信息->1.3 License information
                         .termsOfServiceUrl("https://www.wenxiang.cn/")
                         //设置文档的版本信息-> 1.0.0 Version information
@@ -44,10 +44,10 @@ public class Knife4jConfig {
                         .build())
                 .globalOperationParameters(pars)
                 //分组名称
-                .groupName("文香项目管理平台")
+                .groupName("管理平台")
                 .select()
                 //这里指定Controller扫描包路径
-                .apis(RequestHandlerSelectors.basePackage("com.wx.manage.controller"))
+                .apis(RequestHandlerSelectors.basePackage("com.hwt.sbct.controller"))
                 //可以根据url路径设置哪些请求加入文档，忽略哪些请求
                 .paths(PathSelectors.any())
                 .build();
