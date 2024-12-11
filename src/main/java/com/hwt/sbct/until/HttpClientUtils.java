@@ -33,11 +33,8 @@ import java.net.SocketTimeoutException;
 import java.security.GeneralSecurityException;
 import java.security.cert.CertificateException;
 import java.security.cert.X509Certificate;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 import java.util.Map.Entry;
-import java.util.Set;
 
 public class HttpClientUtils {
 
@@ -77,6 +74,21 @@ public class HttpClientUtils {
 
     public static String get(String url) throws Exception {
         return get(url, charset, null, null);
+    }
+
+    public static String get(String url, Map<String, String> params) throws Exception {
+
+        StringBuilder urlBuilder = new StringBuilder(url);
+        for (Entry<String, String> param : params.entrySet()) {
+            if (urlBuilder.indexOf("?") < 0) {
+                urlBuilder.append("?");
+            } else {
+                urlBuilder.append("&");
+            }
+            urlBuilder.append(param.getKey()).append("=").append(param.getValue());
+        }
+
+        return get(urlBuilder.toString(), charset, connTimeout, readTimeout);
     }
 
     public static String get(String url, String charset) throws Exception {

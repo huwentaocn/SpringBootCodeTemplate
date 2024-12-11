@@ -66,6 +66,12 @@ aliyun:
     bucketName: wxmanage
     urlPrefix: https://${aliyun.oss.bucketName}.${aliyun.oss.endpoint}
 
+#百度配置
+baidu:
+  map:
+    ak: **************** #百度ak
+
+
 #微信配置
 wechat:
   app:

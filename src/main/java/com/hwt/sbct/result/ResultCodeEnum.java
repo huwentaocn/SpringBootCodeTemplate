@@ -84,6 +84,10 @@ public enum ResultCodeEnum {
 
     WENXIANG_CALL_FAIL(-10003, "文香私有化平台调用失败"),
 
+    BAIDU_CALL_FAIL(-11000, "百度平台调用失败"),
+
+    BAIDU_CALL_GET_LOCATION_FAIL(-11001, "调用百度地图获取地址经纬度失败"),
+
     ;
 
     private Integer code;
