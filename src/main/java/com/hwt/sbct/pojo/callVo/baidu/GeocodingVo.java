@@ -1,4 +1,4 @@
-package com.hwt.sbct.pojo.baidu;
+package com.hwt.sbct.pojo.callVo.baidu;
 
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;

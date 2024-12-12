@@ -88,6 +88,10 @@ public enum ResultCodeEnum {
 
     BAIDU_CALL_GET_LOCATION_FAIL(-11001, "调用百度地图获取地址经纬度失败"),
 
+    GAODE_CALL_FAIL(-12000, "高德平台调用失败"),
+
+    GAODE_CALL_GET_LOCATION_FAIL(-12001, "调用高德地图获取地址经纬度失败"),
+
     ;
 
     private Integer code;

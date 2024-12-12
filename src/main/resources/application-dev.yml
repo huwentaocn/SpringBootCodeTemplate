@@ -69,8 +69,12 @@ aliyun:
 #百度配置
 baidu:
   map:
-    ak: **************** #百度ak
+    ak:  #百度ak
 
+#百度配置
+gaode:
+  map:
+    ak:  #高德ak
 
 #微信配置
 wechat:

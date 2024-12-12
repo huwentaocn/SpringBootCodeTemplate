@@ -1,4 +1,4 @@
-package com.hwt.sbct.pojo.baidu;
+package com.hwt.sbct.pojo.callVo.baidu;
 
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
@@ -11,7 +11,7 @@ import lombok.Data;
  */
 
 @Data
-@ApiModel(value = "BaiduResultVo", description = "百度接口返回对象")
+@ApiModel(value = "GaodeResultVo", description = "百度接口返回对象")
 public class BaiduResultVo {
 
     @ApiModelProperty("本次API访问状态，如果成功返回0，如果失败返回其他数字。")
