@@ -71,7 +71,7 @@ baidu:
   map:
     ak:  #百度ak
 
-#百度配置
+#高德配置
 gaode:
   map:
     ak:  #高德ak
