@@ -19,6 +19,7 @@
         <mybatis-plus.version>3.5.3.1</mybatis-plus.version>
         <velocity.version>2.3</velocity.version>
         <mysql.version>8.0.30</mysql.version>
+        <flywaydb.version>6.4.4</flywaydb.version>
         <knife4j-api.version>4.1.0</knife4j-api.version>
         <jwt.version>0.9.1</jwt.version>
         <fastjson.version>2.0.21</fastjson.version>
@@ -145,6 +146,12 @@
             <version>${aliyun-sdk-oss.version}</version>
         </dependency>
 
+        <!--数据库迁移管理-->
+        <dependency>
+            <groupId>org.flywaydb</groupId>
+            <artifactId>flyway-core</artifactId>
+            <version>${flywaydb.version}</version>
+        </dependency>
 
         <!--HttpClient-->
         <dependency>
