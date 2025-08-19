@@ -44,10 +44,10 @@ mybatis-plus:
 
 
 
-###设置日志级别
-#logging:
-#  level:
-#    root: error
+##设置日志级别
+logging:
+  level:
+    root: debug
 
 #阿里云配置
 aliyun:
@@ -65,6 +65,11 @@ aliyun:
     keySecret: #阿里secret
     bucketName: wxmanage
     urlPrefix: https://${aliyun.oss.bucketName}.${aliyun.oss.endpoint}
+  tongyitingwu:
+    access-key-id:  #阿里keyId
+    access-key-secret:  #阿里secret
+    app-key:  #appkey
+
 
 #微信配置
 wechat:

@@ -28,13 +28,13 @@ public class UserLoginInterceptor implements HandlerInterceptor {
     public boolean preHandle(HttpServletRequest request,
                              HttpServletResponse response,
                              Object handler) throws Exception {
-        //从请求头获取token
-        String token = request.getHeader(TokenConstant.AUTHORIZATION);
-        if (!JwtUtil.checkToken(token)) {
-            throw new GlobalException(ResultCodeEnum.LOGIN_AUTH);
-        }
-        //将userId放入上下文
-        AuthContextHolder.setUserId(JwtUtil.getUserId(token));
+//        //从请求头获取token
+//        String token = request.getHeader(TokenConstant.AUTHORIZATION);
+//        if (!JwtUtil.checkToken(token)) {
+//            throw new GlobalException(ResultCodeEnum.LOGIN_AUTH);
+//        }
+//        //将userId放入上下文
+//        AuthContextHolder.setUserId(JwtUtil.getUserId(token));
         return true;
     }
 

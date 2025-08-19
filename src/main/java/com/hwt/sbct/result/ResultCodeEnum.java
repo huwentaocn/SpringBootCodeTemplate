@@ -84,6 +84,8 @@ public enum ResultCodeEnum {
 
     WENXIANG_CALL_FAIL(-10003, "文香私有化平台调用失败"),
 
+    ALI_CLOUD_CALL_FAIL(-10010, "阿里云调用异常"),
+
     ;
 
     private Integer code;
