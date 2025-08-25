@@ -112,19 +112,8 @@ public class WxUserServiceImpl extends ServiceImpl<WxUserMapper, WxUser> impleme
             return Result.fail(ResultCodeEnum.PASSWORD_ERROR);
         }
 
-        //生成token
-        String token = JwtUtil.createToken(wxUser.getId(), wxUser.getUserName());
-
-        //构建响应体
-        UserLoginResp userLoginResp = new UserLoginResp();
-        UserInfoVo userInfoVo = new UserInfoVo();
-        BeanUtils.copyProperties(wxUser, userInfoVo);
-        userLoginResp.setUserInfoVo(userInfoVo);
-        userLoginResp.setToken(token);
-
-        //获取当前登录用户信息，放到Redis里面，设置有效时间
-        redisTemplate.opsForValue().set(RedisConstant.getUserInfoKey(userInfoVo.getId()), userInfoVo, RedisConstant.USER_KEY_TIMEOUT, TimeUnit.DAYS);
-
+        //创建token
+        UserLoginResp userLoginResp = createTokenAfterLoginSuccess(wxUser);
 
         return Result.success(userLoginResp);
     }
@@ -158,6 +147,15 @@ public class WxUserServiceImpl extends ServiceImpl<WxUserMapper, WxUser> impleme
         //验证码正确，一次使用，删除code中的redis
         redisTemplate.delete(smsCaptchaKey);
 
+        //创建token
+        UserLoginResp userLoginResp = createTokenAfterLoginSuccess(wxUser);
+
+        return Result.success(userLoginResp);
+    }
+
+    @Override
+    public UserLoginResp createTokenAfterLoginSuccess(WxUser wxUser) {
+
         //生成token
         String token = JwtUtil.createToken(wxUser.getId(), wxUser.getUserName());
 
@@ -171,7 +169,6 @@ public class WxUserServiceImpl extends ServiceImpl<WxUserMapper, WxUser> impleme
         //获取当前登录用户信息，放到Redis里面，设置有效时间
         redisTemplate.opsForValue().set(RedisConstant.getUserInfoKey(userInfoVo.getId()), userInfoVo, RedisConstant.USER_KEY_TIMEOUT, TimeUnit.DAYS);
 
-
-        return Result.success(userLoginResp);
+        return userLoginResp;
     }
 }

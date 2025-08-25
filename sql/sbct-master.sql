@@ -125,27 +125,27 @@ CREATE TABLE `role_menu`  (
 -- ----------------------------
 DROP TABLE IF EXISTS `user`;
 CREATE TABLE `user`  (
-  `id` bigint(0) NOT NULL COMMENT '唯一id',
-  `user_name` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NULL DEFAULT NULL COMMENT '用户账号',
-  `password` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NULL DEFAULT NULL COMMENT '密码',
-  `name` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NULL DEFAULT NULL COMMENT '昵称',
-  `sex` tinyint(0) NULL DEFAULT 1 COMMENT '性别：1男，2女， 默认1',
-  `head_resource_id` bigint(0) NULL DEFAULT 0 COMMENT '头像id',
-  `status` int(0) NULL DEFAULT NULL COMMENT '账号状态（0正常，1停用），默认0',
-  `mobile` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NULL DEFAULT NULL COMMENT '电话号码',
-  `email` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NULL DEFAULT NULL COMMENT '邮箱',
-  `last_login_ip` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NULL DEFAULT NULL COMMENT '最后登录ip',
-  `last_login_time` datetime(0) NULL DEFAULT NULL COMMENT '最后登录时间',
-  `remark` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NULL DEFAULT NULL COMMENT '备注',
-  `sort` int(0) NULL DEFAULT NULL COMMENT '排序',
-  `version` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NULL DEFAULT '0' COMMENT '版本号，默认0',
-  `deleted` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NULL DEFAULT '0' COMMENT '逻辑删除：0未删除，1已删除，默认0',
-  `creator` bigint(0) NULL DEFAULT NULL COMMENT '创建者',
-  `create_time` datetime(0) NULL DEFAULT NULL COMMENT '创建时间',
-  `updater` bigint(0) NULL DEFAULT NULL COMMENT '更新者',
-  `update_time` datetime(0) NULL DEFAULT NULL COMMENT '更新时间',
-  PRIMARY KEY (`id`) USING BTREE
-) ENGINE = InnoDB CHARACTER SET = utf8mb4 COLLATE = utf8mb4_0900_ai_ci COMMENT = '用户表' ROW_FORMAT = Dynamic;
+                         `id` bigint(0) NOT NULL COMMENT '唯一id',
+                         `user_name` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_bin NULL DEFAULT NULL COMMENT '用户名',
+                         `password` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_bin NULL DEFAULT NULL COMMENT '密码',
+                         `nick_name` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_bin NULL DEFAULT NULL COMMENT '昵称',
+                         `union_id` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_bin NULL DEFAULT NULL COMMENT '用户统一标识。针对一个微信开放平台账号下的应用，同一用户的unionid是唯一的。',
+                         `open_id` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_bin NULL DEFAULT NULL COMMENT '微信openid',
+                         `sex` int(0) NULL DEFAULT 1 COMMENT '性别：1男，2女，默认1',
+                         `age` int(0) NULL DEFAULT NULL COMMENT '年龄',
+                         `head_url` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_bin NULL DEFAULT NULL COMMENT '头像',
+                         `sort` int(0) NULL DEFAULT NULL COMMENT '排序',
+                         `user_type` int(0) NOT NULL DEFAULT 2 COMMENT '用户类型：1管理员，2普通用户，默认2',
+                         `is_deleted` tinyint(0) NULL DEFAULT 0 COMMENT '逻辑删除：0未删除，1删除，默认0',
+                         `version` int(0) NULL DEFAULT 1 COMMENT '版本',
+                         `creator` bigint(0) NULL DEFAULT NULL COMMENT '创建者id',
+                         `create_time` datetime(0) NULL DEFAULT NULL COMMENT '创建时间',
+                         `updater` datetime(0) NULL DEFAULT NULL COMMENT '更新者id',
+                         `update_time` datetime(0) NULL DEFAULT NULL COMMENT '更新时间',
+                         PRIMARY KEY (`id`) USING BTREE
+) ENGINE = InnoDB CHARACTER SET = utf8mb4 COLLATE = utf8mb4_bin COMMENT = '用户表' ROW_FORMAT = Dynamic;
+
+SET FOREIGN_KEY_CHECKS = 1;
 
 -- ----------------------------
 -- Table structure for user_role
@@ -164,5 +164,44 @@ CREATE TABLE `user_role`  (
   `update_time` datetime(0) NULL DEFAULT NULL COMMENT '更新时间',
   PRIMARY KEY (`id`) USING BTREE
 ) ENGINE = InnoDB CHARACTER SET = utf8mb4 COLLATE = utf8mb4_0900_ai_ci COMMENT = '角色-菜单表' ROW_FORMAT = Dynamic;
+
+SET FOREIGN_KEY_CHECKS = 1;
+
+
+-- ----------------------------
+-- Table structure for user_social
+-- ----------------------------
+DROP TABLE IF EXISTS `user_social`;
+CREATE TABLE `user_social`  (
+                                `id` bigint(0) NOT NULL COMMENT '唯一id',
+                                `type` varchar(32) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NOT NULL COMMENT '社交平台类型',
+                                `user_id` bigint(0) NULL DEFAULT NULL COMMENT '平台用户id',
+                                `openid` varchar(32) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NULL DEFAULT NULL COMMENT '社交 openid',
+                                `token` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NULL DEFAULT NULL COMMENT '社交 token',
+                                `raw_token_info` varchar(1024) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NULL DEFAULT NULL COMMENT '原始Token数据，一般是json格式',
+                                `uuid` varchar(64) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NULL DEFAULT NULL COMMENT '社交平台用户id',
+                                `user_name` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NULL DEFAULT NULL COMMENT '社交平台用户账号',
+                                `nick_name` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NULL DEFAULT NULL COMMENT '用户昵称',
+                                `avatar` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NULL DEFAULT NULL COMMENT '用户头像',
+                                `sex` int(0) NULL DEFAULT 0 COMMENT '社交平台用户性别：1男，2女，0未知，默认0',
+                                `blog` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NULL DEFAULT NULL COMMENT '社交平台用户博客',
+                                `company` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NULL DEFAULT NULL COMMENT '社交平台用户公司',
+                                `location` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NULL DEFAULT NULL COMMENT '社交平台用户位置',
+                                `email` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NULL DEFAULT NULL COMMENT '社交平台用户邮箱',
+                                `raw_user_info` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NULL DEFAULT NULL COMMENT '原始用户数据，一般是json格式',
+                                `code` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NULL DEFAULT NULL COMMENT '最后一次认证的code',
+                                `state` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NULL DEFAULT NULL COMMENT '最后一次认证的state',
+                                `status` int(0) NULL DEFAULT NULL COMMENT '账号状态（0正常，1停用），默认0',
+                                `remark` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NULL DEFAULT NULL COMMENT '备注',
+                                `sort` int(0) NULL DEFAULT NULL COMMENT '排序',
+                                `version` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NULL DEFAULT '0' COMMENT '版本号，默认0',
+                                `deleted` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NULL DEFAULT '0' COMMENT '逻辑删除：0未删除，1已删除，默认0',
+                                `creator` bigint(0) NULL DEFAULT NULL COMMENT '创建者',
+                                `create_time` datetime(0) NULL DEFAULT NULL COMMENT '创建时间',
+                                `updater` bigint(0) NULL DEFAULT NULL COMMENT '更新者',
+                                `update_time` datetime(0) NULL DEFAULT NULL COMMENT '更新时间',
+                                PRIMARY KEY (`id`) USING BTREE,
+                                UNIQUE INDEX `un_index`(`type`, `openid`, `deleted`) USING BTREE COMMENT '唯一索引'
+) ENGINE = InnoDB CHARACTER SET = utf8mb4 COLLATE = utf8mb4_0900_ai_ci COMMENT = '社交用户表' ROW_FORMAT = Dynamic;
 
 SET FOREIGN_KEY_CHECKS = 1;

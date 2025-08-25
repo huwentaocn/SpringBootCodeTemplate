@@ -1,7 +1,7 @@
 server:
   port: 9000
   servlet:
-    context-path: /manage
+    context-path: /sbct
   encoding:
     charset: UTF-8
     enabled: true
@@ -12,9 +12,9 @@ spring:
   datasource: # mysql数据库连接
     type: com.zaxxer.hikari.HikariDataSource
     driver-class-name: com.mysql.cj.jdbc.Driver
-    url: jdbc:mysql://127.0.0.1:3306/wx_wechat?useUnicode=true&characterEncoding=UTF-8&useSSL=false&useTimezone=true&serverTimezone=GMT%2B8&allowPublicKeyRetrieval=true
-    username: #数据库用户名
-    password: #数据库密码
+    url: jdbc:mysql://127.0.0.1:3306/sbct-master?useUnicode=true&characterEncoding=UTF-8&useSSL=false&useTimezone=true&serverTimezone=GMT%2B8&allowPublicKeyRetrieval=true
+    username: root #数据库用户名
+    password: 123456 #数据库密码
 
   jackson:
     date-format: yyyy-MM-dd HH:mm:ss #设置全局的日期格式为年月日时分秒
@@ -72,3 +72,10 @@ wechat:
     configs:
       - appid:  #微信小程序的appid
         secret:  #微信小程序的Secret
+
+justauth:
+  enabled: true
+  DINGTALK: # 钉钉
+    client-id: #应用id
+    client-secret: #应用密钥
+    ignore-check-redirect-uri: true #是否忽略回调地址检查

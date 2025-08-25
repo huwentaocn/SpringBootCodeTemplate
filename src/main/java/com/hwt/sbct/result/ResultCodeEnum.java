@@ -1,5 +1,6 @@
 package com.hwt.sbct.result;
 
+import lombok.AllArgsConstructor;
 import lombok.Getter;
 
 /**
@@ -7,6 +8,7 @@ import lombok.Getter;
  *
  */
 @Getter
+@AllArgsConstructor
 public enum ResultCodeEnum {
 
     SUCCESS(200,"成功"),
@@ -82,14 +84,19 @@ public enum ResultCodeEnum {
 
     WENXIANG_CALL_FAIL(-10003, "文香私有化平台调用失败"),
 
+    SOCIAL_USER_AUTH_FAIL(-11000, "社交授权失败"),
+
+    SOCIAL_USER_NOT_EXIST_FAIL(-11001, "社交用户不存在"),
+
+
+    SOCIAL_USER_NOT_BIND_FAIL(-11002, "社交用户未绑定平台用户"),
+
+    SOCIAL_USER_ALREADY_BIND_FAIL(-11003, "社交用户已经绑定平台用户"),
+
     ;
 
-    private Integer code;
+    public Integer code;
 
-    private String message;
+    public String message;
 
-    private ResultCodeEnum(Integer code, String message) {
-        this.code = code;
-        this.message = message;
-    }
 }

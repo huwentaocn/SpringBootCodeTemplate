@@ -20,7 +20,7 @@ import java.time.LocalDateTime;
  */
 @Getter
 @Setter
-@TableName("wx_user")
+@TableName("user")
 @ApiModel(value = "WxUser对象", description = "用户表")
 public class WxUser implements Serializable {
 

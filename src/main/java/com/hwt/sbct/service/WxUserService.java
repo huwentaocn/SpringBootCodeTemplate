@@ -24,4 +24,6 @@ public interface WxUserService extends IService<WxUser> {
     Result<UserLoginResp> passwordLogin(UserPasswordLoginReq req);
 
     Result<UserLoginResp> smsLogin(UserSmsLoginReq req);
+
+    UserLoginResp createTokenAfterLoginSuccess(WxUser wxUser);
 }

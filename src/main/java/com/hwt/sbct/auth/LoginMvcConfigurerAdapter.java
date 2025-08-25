@@ -32,10 +32,19 @@ public class LoginMvcConfigurerAdapter implements WebMvcConfigurer {
         add("/templates/**");
         add("/error");
 
+        //放行web页面
+        add("/**/*.html");
+
+        //放行web页面
+        add("/web/**");
+
         //放行短信
         add("/**/sms/**");
 
         add("/**/login/**");
+
+        //需要放行接口加“/hero“
+        add("/**/hero/**");
     }};
 
     @Override

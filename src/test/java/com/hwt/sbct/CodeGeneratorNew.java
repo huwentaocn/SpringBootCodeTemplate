@@ -58,7 +58,7 @@ public class CodeGeneratorNew {
                 }))
                 //包配置
                 .packageConfig(builder -> {
-                    builder.parent("com.wx.manage") // 设置父包名
+                    builder.parent("com.hwt.sbct") // 设置父包名
 //                            .moduleName("wx-digital-lab") // 设置父包模块名
                             .entity("pojo.entity") //设置entity包名
                             .service("service")
@@ -73,7 +73,7 @@ public class CodeGeneratorNew {
                 .strategyConfig(builder -> {
                     builder
                             //entity配置策略
-                            .addInclude("wx_project")
+                            .addInclude("user_social")
                             .entityBuilder()
                             .enableLombok()
                             .idType(IdType.ASSIGN_ID) //id策略，雪花算法

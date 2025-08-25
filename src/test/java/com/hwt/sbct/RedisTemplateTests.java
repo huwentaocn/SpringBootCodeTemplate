@@ -3,6 +3,7 @@ package com.hwt.sbct;
 import com.alibaba.fastjson.JSONObject;
 import com.hwt.sbct.mapper.WxProjectMapper;
 import com.hwt.sbct.pojo.entity.WxProject;
+import com.hwt.sbct.until.EncryptionUtil;
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.data.redis.core.RedisTemplate;
@@ -28,7 +29,7 @@ public class RedisTemplateTests {
 
     @Test
     public void getDict(){
-        WxProject wxProject = (WxProject)redisTemplate.opsForValue().get("wxProject");
-        System.out.println(JSONObject.toJSONString(wxProject));
+        String s = EncryptionUtil.encryptMD5("123456789");
+        System.out.println(s);
     }
 }
